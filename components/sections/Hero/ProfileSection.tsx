@@ -1,43 +1,27 @@
 import { memo } from 'react';
-import { Instagram, Youtube, Linkedin, Mail } from 'lucide-react';
+import { socialLinks } from '@/utils/constants/socialLinks';
 import { SocialLink } from './SocialLink';
 import { ProfileImage } from './ProfileImage';
+import { calculateHexagonPoints } from '@/utils/geometry/hexagon';
 
-const socialLinks = [
-	{
-		id: 'instagram',
-		icon: Instagram,
-		href: 'https://instagram.com',
-		position: 'top-0 left-1/2 -translate-x-1/2',
-	},
-	{
-		id: 'youtube',
-		icon: Youtube,
-		href: 'https://youtube.com',
-		position: 'top-1/2 right-0 -translate-y-1/2',
-	},
-	{
-		id: 'linkedin',
-		icon: Linkedin,
-		href: 'https://linkedin.com',
-		position: 'bottom-0 left-1/2 -translate-x-1/2',
-	},
-	{
-		id: 'mail',
-		icon: Mail,
-		href: 'mailto:info@adebayoademon.com',
-		position: 'top-1/2 left-0 -translate-y-1/2',
-	},
-];
+const HEXAGON_RADIUS = 140; // Increased radius for more spacing
+const points = calculateHexagonPoints(HEXAGON_RADIUS);
 
 function ProfileSectionComponent() {
 	return (
 		<div className='relative hidden items-center justify-center lg:flex'>
-			<div className='relative flex h-[300px] w-[300px] items-center justify-center'>
-				{socialLinks.map((link) => (
-					<SocialLink key={link.id} {...link} />
+			<div className='relative h-[350px] w-[350px]'>
+				{socialLinks.map((link, index) => (
+					<SocialLink
+						key={link.id}
+						{...link}
+						x={points[index].x}
+						y={points[index].y}
+					/>
 				))}
-				<ProfileImage />
+				<div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
+					<ProfileImage />
+				</div>
 			</div>
 		</div>
 	);

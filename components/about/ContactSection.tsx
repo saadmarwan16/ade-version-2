@@ -21,9 +21,12 @@ export function ContactSection() {
 		<section className='bg-gradient-to-br from-gray-900 via-indigo-900 to-purple-900 py-24'>
 			<div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
 				<div className='mb-16 text-center'>
-					<h2 className='mb-4 text-4xl font-bold text-white'>Let&apos;s Connect</h2>
+					<h2 className='mb-4 text-4xl font-bold text-white'>
+						Let&apos;s Connect
+					</h2>
 					<p className='mx-auto max-w-2xl text-xl text-indigo-200'>
-						Have a question or want to collaborate? I&apos;d love to hear from you.
+						Have a question or want to collaborate? I&apos;d love to hear from
+						you.
 					</p>
 				</div>
 

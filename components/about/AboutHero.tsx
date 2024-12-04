@@ -16,7 +16,10 @@ export function AboutHero() {
 				<Image
 					src='https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80'
 					alt='Background'
-					className='h-full w-full object-cover'
+					fill
+					className='object-cover'
+					sizes='100vw'
+					priority
 				/>
 				<div className='absolute inset-0 bg-gradient-to-br from-indigo-900/95 via-purple-900/95 to-pink-900/95' />
 			</div>

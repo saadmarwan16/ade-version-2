@@ -2,7 +2,7 @@ import { memo } from 'react';
 
 function HeroTitleComponent() {
 	return (
-		<h1 className='relative mb-8 text-7xl font-bold leading-tight'>
+		<h1 className='relative mb-8 text-6xl font-bold !leading-tight md:text-7xl'>
 			<span className='text-white'>I am</span>
 			<br />
 			<span className='bg-gradient-to-r from-indigo-200 to-purple-200 bg-clip-text text-transparent'>

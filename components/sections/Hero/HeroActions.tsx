@@ -9,8 +9,8 @@ function HeroActionsComponent() {
 				Learn more
 				<ArrowRight className='h-4 w-4 transition-transform group-hover:translate-x-1' />
 			</Button>
-			<Button variant='secondary' href='/activities'>
-				View activities
+			<Button variant='secondary' href='#projects'>
+				View projects
 			</Button>
 		</div>
 	);

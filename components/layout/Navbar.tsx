@@ -6,11 +6,14 @@ import { useState, useEffect, useRef } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Avatar } from '../ui/Avatar';
 import { LanguageSelector } from '../ui/LanguageSelector';
+import { ContactDropdown } from '../ui/ContactDropdown';
+import { MobileContactInfo } from '../ui/MobileContactInfo';
 
 const navLinks = [
+	{ href: '/', label: 'Welcome' },
+	{ href: '/about', label: 'Know me' },
 	{ href: '/activities', label: 'Activities' },
 	{ href: '/galleries', label: 'Galleries' },
-	{ href: '/about', label: 'Know me' },
 ];
 
 export function Navbar() {
@@ -18,7 +21,6 @@ export function Navbar() {
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement>(null);
 
-	// Handle click outside
 	useEffect(() => {
 		function handleClickOutside(event: MouseEvent) {
 			if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -37,7 +39,6 @@ export function Navbar() {
 		};
 	}, [isOpen]);
 
-	// Handle escape key
 	useEffect(() => {
 		function handleEscapeKey(event: KeyboardEvent) {
 			if (event.key === 'Escape') {
@@ -61,7 +62,7 @@ export function Navbar() {
 					<div className='flex h-20 items-center justify-between'>
 						<Link
 							href='/'
-							className='flex cursor-pointer items-center gap-3 transition hover:scale-105'
+							className='flex items-center gap-3 transition hover:scale-105 hover:cursor-pointer'
 						>
 							<Avatar size='md' />
 							<span className='bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-2xl font-bold text-transparent lg:text-3xl'>
@@ -70,7 +71,7 @@ export function Navbar() {
 						</Link>
 
 						{/* Desktop Navigation */}
-						<div className='hidden items-center gap-8 lg:flex'>
+						<div className='hidden items-center gap-5 lg:flex xl:gap-8'>
 							{navLinks.map(({ href, label }) => (
 								<Link
 									key={label}
@@ -82,6 +83,7 @@ export function Navbar() {
 									{label}
 								</Link>
 							))}
+							<ContactDropdown />
 							<LanguageSelector />
 						</div>
 
@@ -117,14 +119,14 @@ export function Navbar() {
 			<div
 				ref={menuRef}
 				id='mobile-menu'
-				className={`fixed bottom-0 right-0 top-0 z-50 w-[280px] transform bg-white shadow-2xl transition-transform duration-300 ease-in-out lg:hidden ${
+				className={`fixed bottom-0 right-0 top-0 z-50 flex w-[320px] transform flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out sm:w-[380px] lg:hidden ${
 					isOpen ? 'translate-x-0' : 'translate-x-full'
 				}`}
 				role='dialog'
 				aria-modal='true'
 				aria-label='Navigation menu'
 			>
-				<div className='flex h-20 items-center justify-end border-b border-gray-100 px-4'>
+				<div className='flex h-20 flex-shrink-0 items-center justify-end border-b border-gray-100 px-4'>
 					<button
 						onClick={() => setIsOpen(false)}
 						className='rounded-md p-2 text-gray-600 transition-colors hover:bg-gray-50 hover:text-indigo-600'
@@ -134,23 +136,35 @@ export function Navbar() {
 					</button>
 				</div>
 
-				<div className='space-y-3 px-4 py-6'>
-					{navLinks.map(({ href, label }) => (
-						<Link
-							key={label}
-							href={href}
-							onClick={() => setIsOpen(false)}
-							className={`block rounded-lg px-4 py-3 text-lg font-medium transition-all ${
-								pathname === href
-									? 'bg-indigo-50 text-indigo-600 shadow-sm'
-									: 'text-gray-600 hover:bg-gray-50 hover:text-indigo-600'
-							}`}
-						>
-							{label}
-						</Link>
-					))}
-					<div className='px-4 py-3'>
-						<LanguageSelector />
+				<div className='flex-1 overflow-y-auto'>
+					<div className='space-y-6 px-4 py-6'>
+						<div className='space-y-3'>
+							{navLinks.map(({ href, label }) => (
+								<Link
+									key={label}
+									href={href}
+									onClick={() => setIsOpen(false)}
+									className={`block rounded-lg px-4 py-3 text-lg font-medium transition-all ${
+										pathname === href
+											? 'bg-indigo-50 text-indigo-600 shadow-sm'
+											: 'text-gray-600 hover:bg-gray-50 hover:text-indigo-600'
+									}`}
+								>
+									{label}
+								</Link>
+							))}
+						</div>
+
+						<div className='border-t border-gray-100 pt-4'>
+							<div className='mb-4 px-4 text-lg font-medium text-gray-900'>
+								Contact Information
+							</div>
+							<MobileContactInfo />
+						</div>
+
+						<div className='border-t border-gray-100 px-4 pt-4'>
+							<LanguageSelector />
+						</div>
 					</div>
 				</div>
 			</div>
