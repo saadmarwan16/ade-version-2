@@ -1,6 +1,3 @@
-'use client';
-
-import { useParams } from 'next/navigation';
 import { Calendar } from 'lucide-react';
 import { activities } from '@/components/activities/data';
 import { ActivityContent } from '@/components/activities/details/ActivityContent';
@@ -8,10 +5,22 @@ import { ActivityShare } from '@/components/activities/details/ActivityShare';
 import { RelatedActivities } from '@/components/activities/details/RelatedActivities';
 import { ImageCarousel } from '@/components/activities/carousel/ImageCarousel';
 import Image from 'next/image';
+import { FunctionComponent } from 'react';
 
-export default function ActivityDetails() {
-	const params = useParams();
-	const activity = activities.find((a) => a.id === Number(params.id));
+interface ActivityDetailsPageProps {
+	params: {
+		id: string;
+	};
+}
+
+export const generateStaticParams = () => {
+	return activities.map((activity) => ({ id: activity.id.toString() }));
+};
+
+const ActivityDetailsPage: FunctionComponent<
+	ActivityDetailsPageProps
+> = ({ params: { id } }) => {
+	const activity = activities.find((a) => a.id === Number(id));
 
 	if (!activity) {
 		return (
@@ -29,6 +38,8 @@ export default function ActivityDetails() {
 					src={activity.image}
 					alt={activity.title}
 					className='h-full w-full object-cover opacity-50'
+					fill
+					sizes='100vw'
 				/>
 				<div className='absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent' />
 
@@ -108,4 +119,6 @@ export default function ActivityDetails() {
 			</div>
 		</div>
 	);
-}
+};
+
+export default ActivityDetailsPage;

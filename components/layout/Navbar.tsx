@@ -6,14 +6,14 @@ import { useState, useEffect, useRef } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Avatar } from '../ui/Avatar';
 import { LanguageSelector } from '../ui/LanguageSelector';
-import { ContactDropdown } from '../ui/ContactDropdown';
 import { MobileContactInfo } from '../ui/MobileContactInfo';
 
 const navLinks = [
-	{ href: '/', label: 'Welcome' },
+  { href: '/', label: 'Welcome' },
 	{ href: '/about', label: 'Know me' },
 	{ href: '/activities', label: 'Activities' },
 	{ href: '/galleries', label: 'Galleries' },
+	{ href: '/contact', label: 'Contact' },
 ];
 
 export function Navbar() {
@@ -71,7 +71,7 @@ export function Navbar() {
 						</Link>
 
 						{/* Desktop Navigation */}
-						<div className='hidden items-center gap-5 lg:flex xl:gap-8'>
+						<div className='hidden items-center gap-8 lg:flex'>
 							{navLinks.map(({ href, label }) => (
 								<Link
 									key={label}
@@ -83,7 +83,6 @@ export function Navbar() {
 									{label}
 								</Link>
 							))}
-							<ContactDropdown />
 							<LanguageSelector />
 						</div>
 

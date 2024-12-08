@@ -17,6 +17,8 @@ export function GalleryHero() {
 					src='https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80'
 					alt='Gallery background'
 					className='h-full w-full object-cover'
+					fill
+					sizes='100vw'
 				/>
 				<div className='absolute inset-0 bg-gradient-to-br from-indigo-900/95 via-purple-900/95 to-pink-900/95' />
 			</div>

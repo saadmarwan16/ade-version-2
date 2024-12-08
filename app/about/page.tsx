@@ -2,7 +2,6 @@
 
 import { AboutHero } from '@/components/about/AboutHero';
 import { AboutContent } from '@/components/about/AboutContent';
-import { ContactSection } from '@/components/about/ContactSection';
 
 export default function AboutPage() {
 	return (
@@ -11,7 +10,6 @@ export default function AboutPage() {
 			<div className='py-12 sm:py-16 md:py-20 lg:py-24'>
 				<AboutContent />
 			</div>
-			<ContactSection />
 		</main>
 	);
 }

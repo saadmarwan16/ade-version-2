@@ -1,14 +1,23 @@
-'use client';
-
-import { useParams } from 'next/navigation';
 import { galleries } from '@/components/galleries/data';
 import { GalleryMasonry } from '@/components/galleries/details/GalleryMasonry';
 import { GalleryShare } from '@/components/galleries/details/GalleryShare';
 import Image from 'next/image';
+import { FunctionComponent } from 'react';
 
-export default function GalleryDetails() {
-	const params = useParams();
-	const gallery = galleries.find((g) => g.id === Number(params.id));
+interface GalleryDetailsPageProps {
+	params: {
+		id: string;
+	};
+}
+
+export const generateStaticParams = () => {
+	return galleries.map((gallery) => ({ id: gallery.id.toString() }));
+};
+
+const GalleryDetailsPage: FunctionComponent<
+	GalleryDetailsPageProps
+> = ({ params: { id } }) => {
+	const gallery = galleries.find((g) => g.id === Number(id));
 
 	if (!gallery) {
 		return (
@@ -26,6 +35,8 @@ export default function GalleryDetails() {
 					src={gallery.coverImage}
 					alt={gallery.title}
 					className='h-full w-full object-cover opacity-50'
+					fill
+					sizes='100vw'
 				/>
 				<div className='absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent' />
 
@@ -52,3 +63,5 @@ export default function GalleryDetails() {
 		</div>
 	);
 }
+
+export default GalleryDetailsPage;
