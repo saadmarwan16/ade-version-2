@@ -10,7 +10,7 @@ export function GalleryHero() {
 	};
 
 	return (
-		<div className='relative h-screen bg-gradient-to-br from-gray-900 via-indigo-900 to-purple-900'>
+		<div className='relative min-h-[75vh] bg-gradient-to-br from-gray-900 via-indigo-900 to-purple-900 lg:h-[90vh]'>
 			{/* Background image with overlay */}
 			<div className='absolute inset-0'>
 				<Image

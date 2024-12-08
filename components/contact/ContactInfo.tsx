@@ -35,8 +35,8 @@ export function ContactInfo() {
 					Contact Information
 				</h2>
 				<p className='text-lg text-gray-600'>
-					Feel free to reach out through any of these channels. I&apos;ll get back to
-					you as soon as possible.
+					Feel free to reach out through any of these channels. I&apos;ll get
+					back to you as soon as possible.
 				</p>
 			</div>
 
@@ -57,7 +57,7 @@ export function ContactInfo() {
 									rel={
 										href.startsWith('http') ? 'noopener noreferrer' : undefined
 									}
-									className='text-lg text-gray-900 transition-colors hover:text-indigo-600'
+									className='text-base text-gray-900 transition-colors hover:text-indigo-600 sm:text-lg'
 								>
 									{value}
 								</a>

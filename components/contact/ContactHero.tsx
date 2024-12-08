@@ -4,13 +4,13 @@ import Link from 'next/link';
 
 export function ContactHero() {
 	return (
-		<section className='relative h-[90vh] bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900'>
+		<section className='relative h-[65vh] bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 lg:h-[90vh]'>
 			<div className='absolute inset-0'>
 				<Image
 					src='https://images.unsplash.com/photo-1516387938699-a93567ec168e?auto=format&fit=crop&q=80'
 					alt='Contact background'
 					className='h-full w-full object-cover'
-          fill
+					fill
 					sizes='100vw'
 				/>
 				<div className='absolute inset-0 bg-gradient-to-br from-indigo-900/95 via-purple-900/95 to-pink-900/95' />
@@ -21,7 +21,8 @@ export function ContactHero() {
 					Let&apos;s Connect
 				</h1>
 				<p className='mx-auto mb-12 max-w-3xl text-xl text-indigo-100'>
-					Have a question or want to collaborate? I&apos;d love to hear from you.
+					Have a question or want to collaborate? I&apos;d love to hear from
+					you.
 				</p>
 
 				<Link

@@ -14,9 +14,9 @@ export const generateStaticParams = () => {
 	return galleries.map((gallery) => ({ id: gallery.id.toString() }));
 };
 
-const GalleryDetailsPage: FunctionComponent<
-	GalleryDetailsPageProps
-> = ({ params: { id } }) => {
+const GalleryDetailsPage: FunctionComponent<GalleryDetailsPageProps> = ({
+	params: { id },
+}) => {
 	const gallery = galleries.find((g) => g.id === Number(id));
 
 	if (!gallery) {
@@ -62,6 +62,6 @@ const GalleryDetailsPage: FunctionComponent<
 			</div>
 		</div>
 	);
-}
+};
 
 export default GalleryDetailsPage;

@@ -1,16 +1,10 @@
 import { ChevronDown } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export function AboutHero() {
-	const scrollToContent = () => {
-		window.scrollTo({
-			top: window.innerHeight - 80, // Subtract some pixels to account for padding
-			behavior: 'smooth',
-		});
-	};
-
 	return (
-		<section className='relative h-[90vh] bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900'>
+		<section className='relative h-[65vh] bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 md:h-[90vh]'>
 			{/* Background image with overlay */}
 			<div className='absolute inset-0'>
 				<Image
@@ -33,13 +27,13 @@ export function AboutHero() {
 					healthcare innovation with global collaboration
 				</p>
 
-				<button
-					onClick={scrollToContent}
+				<Link
+					href='#content'
 					className='animate-bounce text-white/80 transition-colors hover:text-white'
 					aria-label='Scroll to content'
 				>
 					<ChevronDown className='h-10 w-10' />
-				</button>
+				</Link>
 			</div>
 		</section>
 	);

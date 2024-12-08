@@ -6,10 +6,9 @@ import { useState, useEffect, useRef } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Avatar } from '../ui/Avatar';
 import { LanguageSelector } from '../ui/LanguageSelector';
-import { MobileContactInfo } from '../ui/MobileContactInfo';
 
 const navLinks = [
-  { href: '/', label: 'Welcome' },
+	{ href: '/', label: 'Welcome' },
 	{ href: '/about', label: 'Know me' },
 	{ href: '/activities', label: 'Activities' },
 	{ href: '/galleries', label: 'Galleries' },
@@ -152,13 +151,6 @@ export function Navbar() {
 									{label}
 								</Link>
 							))}
-						</div>
-
-						<div className='border-t border-gray-100 pt-4'>
-							<div className='mb-4 px-4 text-lg font-medium text-gray-900'>
-								Contact Information
-							</div>
-							<MobileContactInfo />
 						</div>
 
 						<div className='border-t border-gray-100 px-4 pt-4'>

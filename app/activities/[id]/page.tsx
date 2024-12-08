@@ -17,9 +17,9 @@ export const generateStaticParams = () => {
 	return activities.map((activity) => ({ id: activity.id.toString() }));
 };
 
-const ActivityDetailsPage: FunctionComponent<
-	ActivityDetailsPageProps
-> = ({ params: { id } }) => {
+const ActivityDetailsPage: FunctionComponent<ActivityDetailsPageProps> = ({
+	params: { id },
+}) => {
 	const activity = activities.find((a) => a.id === Number(id));
 
 	if (!activity) {

@@ -40,14 +40,14 @@ export function SocialLinks() {
 				</p>
 			</div>
 
-			<div className='grid grid-cols-2 gap-4'>
+			<div className='flex flex-wrap gap-4 sm:grid sm:grid-cols-2'>
 				{socialLinks.map(({ icon: Icon, label, href, color }) => (
 					<a
 						key={label}
 						href={href}
 						target='_blank'
 						rel='noopener noreferrer'
-						className={`group flex items-center gap-4 rounded-xl border-2 border-gray-100 p-4 transition-all duration-300 hover:text-white ${color}`}
+						className={`group flex grow items-center gap-4 rounded-xl border-2 border-gray-100 p-4 transition-all duration-300 hover:text-white ${color}`}
 						aria-label={`Visit my ${label} profile`}
 					>
 						<div className='flex h-12 w-12 items-center justify-center rounded-xl bg-gray-50 group-hover:bg-white/10'>
