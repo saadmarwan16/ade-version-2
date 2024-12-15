@@ -16,34 +16,33 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-	title: 'Adébayo Ademon',
-	description: 'Biomedical Engineer & International Relations Expert',
+	title: 'Adébayo Ademon',  // 50 - 70 characters
+	description: 'Biomedical Engineer & International Relations Expert',  // Upto 200 characters
 	metadataBase: new URL('https://adebayoademon.com'),
+	keywords: ['ademon', 'adebayo', 'biomedical', 'international', 'relations'],
+	alternates: {
+		canonical: 'https://adebayoademon.com',
+		languages: {
+			en: 'https://adebayoademon.com/en',
+			fr: 'https://adebayoademon.com/fr',
+			tr: 'https://adebayoademon.com/tr',
+		}
+	},
 	openGraph: {
-		title: 'Adébayo Ademon',
-		description: 'Biomedical Engineer & International Relations Expert',
+		title: 'Adébayo Ademon',  // 50 - 70 characters
+		description: 'Biomedical Engineer & International Relations Expert',  // Upto 200 characters
+		images: 'https://adebayoademon.com/og-image.png',  // Recommended: (1200x630)px with an aspect ratio of 1.91:1
 		url: 'https://adebayoademon.com',
 		siteName: 'Adébayo Ademon',
 		locale: 'en_US',
-		type: 'website',
+		type: 'website',  // Article for the gallery details and activity details page and website for all the other pages
 	},
 	twitter: {
-		card: 'summary_large_image',
 		title: 'Adébayo Ademon',
 		description: 'Biomedical Engineer & International Relations Expert',
-		creator: '@adebayoademon',
-	},
-	robots: {
-		index: true,
-		follow: true,
-		googleBot: {
-			index: true,
-			follow: true,
-			'max-video-preview': -1,
-			'max-image-preview': 'large',
-			'max-snippet': -1,
-		},
-	},
+		images: 'https://adebayoademon.com/og-image.png',
+		card: 'summary_large_image',
+	}
 };
 
 export default function RootLayout({

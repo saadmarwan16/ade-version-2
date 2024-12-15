@@ -1,0 +1,103 @@
+{
+	"Shared": {
+		"welcome": "Welcome",
+		"know-me": "Know me",
+		"activities": "Activities",
+		"galleries": "Galleries",
+		"contact": "Contact",
+		"rights": "All rights reserved"
+	},
+	"HomePage": {
+		"name": "I am",
+		"profession": "Biomedical Engineer & International Relations Expert",
+		"description": "Bridging the gap between healthcare innovation and global collaboration",
+		"learn-more-button": "Learn more",
+		"view-projects-button": "View projects",
+		"featured-projects-title": "Featured Projects",
+		"featured-projects-description": "Innovative healthcare solutions driving impact across Africa",
+		"trusted-partners-title": "Trusted Partners",
+		"trusted-partners-description": "Collaborating with leading organizations to drive innovation",
+		"recent-activities-title": "Recent Activities",
+		"recent-activities-description": "Connecting healthcare, technology, and international relations",
+		"view-all-button": "View all"
+	},
+	"ActivitiesPage": {
+		"title": "Journey Through Impact",
+		"description": "Explore my path of innovation in healthcare, international relations, and community development. Each activity represents a step towards positive change in Africa and beyond.",
+        "search-placeholder": "Search activities...",
+        "sort-by-button": "Sort by",
+        "latest-first-option": "Latest first",
+        "oldest-first-option": "Oldest first",
+		"all-tab": "All",
+		"personal-tab": "Personal",
+		"social-tab": "Social",
+		"political-tab": "Political",
+		"professional-tab": "Professional",
+        "read-more-button": "Read more",
+		"see-more-button": "See more"
+	},
+	"ActivityDetailsPage": {
+		"share": "Share",
+        "email": "Email",
+        "copy-link": "Copy link",
+        "related-activities-title": "Related Activities"
+	},
+	"GalleriesPage": {
+        "title-prefix": "WELCOME TO",
+        "title-suffix": "MY VISUAL DIARY",
+        "description": "A collection of moments, memories, and milestones in my journey through healthcare innovation and international relations",
+        "search-placeholder": "Search galleries...",
+        "sort-by-button": "Sort by",
+        "latest-first-option": "Latest first",
+        "oldest-first-option": "Oldest first",
+		"photos": "Photo(s)",
+        "view-gallery-button": "View gallery",
+		"see-more-button": "See more"
+	},
+	"KnowMePage": {
+		"title": "Know Me Better",
+		"description": "Biomedical Engineer & International Relations Expert bridging healthcare innovation with global collaboration"
+	},
+    "ContactPage": {
+        "title": "Let's Connect",
+        "description": "Have a question or want to collaborate? I'd love to hear from you.",
+        "contact-info-title": "Contact Information",
+        "contact-info-description": "Feel free to reach out through any of these channels. I'll get back to you as soon as possible.",
+        "contact-info-phone": "Phone",
+        "contact-info-whatsapp": "WhatsApp",
+        "contact-info-email": "Email",
+        "contact-info-location": "Location",
+        "connect-title": "Connect With Me",
+        "connect-description": "Follow me on social media to stay updated with my latest projects and activities.",
+        "connect-follow-on": "Follow on",
+		"reach-out-title": "Reach out",
+		"reach-out-description": "I will try to get back to you as soon as possible",
+		"name": "Your name",
+		"email": "Your email",
+		"subject": "Subject",
+		"message": "Your message",
+		"send-message-button": "Send message",
+		"message-send-success": "Message sent successfully"
+    },
+	"NotFoundPage": {
+		"not-found": "Page not Found",
+		"no-resource": "Could not find requested resource",
+		"home": "Return Home"
+	},
+	"ErrorPage": {
+		"message": "Internal Server Error",
+		"description": "A very unexpected error occurred. Please try again later.",
+		"button": "Try again"
+	},
+	"EmptyActivitiesList": {
+		"title": "No activities found",
+		"all-description": "There are no activities to display at the moment.",
+		"category-description": "No activities found in personal category.",
+		"button": "View all activities",
+		"no-activity-details": "Activity not found"
+	},
+	"EmptyGalleriesList": {
+		"title": "No galleries found",
+		"no-gallery-details": "Gallery not found"
+	}
+}

@@ -1,0 +1,103 @@
+{
+	"Shared": {
+		"welcome": "Accueil",
+		"know-me": "Me connaître",
+		"activities": "Activités",
+		"galleries": "Galeries",
+		"contact": "Contact",
+		"rights": "Tous droits réservés"
+	},
+	"HomePage": {
+		"name": "Je suis",
+		"profession": "Ingénieur biomédical et expert en relations internationales",
+		"description": "Combler le fossé entre l'innovation en santé et la collaboration mondiale",
+		"learn-more-button": "En savoir plus",
+		"view-projects-button": "Voir les projets",
+		"featured-projects-title": "Projets phares",
+		"featured-projects-description": "Solutions de santé innovantes ayant un impact en Afrique",
+		"trusted-partners-title": "Partenaires de confiance",
+		"trusted-partners-description": "Collaborer avec des organisations de premier plan pour promouvoir l'innovation",
+		"recent-activities-title": "Activités récentes",
+		"recent-activities-description": "Relier santé, technologie et relations internationales",
+		"view-all-button": "Voir tout"
+	},
+	"ActivitiesPage": {
+		"title": "Parcours d'impact",
+		"description": "Explorez mon cheminement dans l'innovation en santé, les relations internationales et le développement communautaire. Chaque activité représente une étape vers un changement positif en Afrique et au-delà.",
+        "search-placeholder": "Rechercher des activités...",
+        "sort-by-button": "Trier par",
+        "latest-first-option": "Les plus récentes",
+        "oldest-first-option": "Les plus anciennes",
+		"all-tab": "Tout",
+		"personal-tab": "Personnel",
+		"social-tab": "Social",
+		"political-tab": "Politique",
+		"professional-tab": "Professionnel",
+        "read-more-button": "Lire la suite",
+		"see-more-button": "Voir plus"
+	},
+	"ActivityDetailsPage": {
+		"share": "Partager",
+        "email": "E-mail",
+        "copy-link": "Copier le lien",
+        "related-activities-title": "Activités connexes"
+	},
+	"GalleriesPage": {
+        "title-prefix": "BIENVENUE DANS",
+        "title-suffix": "MON JOURNAL VISUEL",
+        "description": "Une collection de moments, souvenirs et étapes de mon parcours dans l'innovation en santé et les relations internationales",
+        "search-placeholder": "Rechercher des galeries...",
+        "sort-by-button": "Trier par",
+        "latest-first-option": "Les plus récentes",
+        "oldest-first-option": "Les plus anciennes",
+		"photos": "Photo(s)",
+        "view-gallery-button": "Voir la galerie",
+		"see-more-button": "Voir plus"
+	},
+	"KnowMePage": {
+		"title": "Apprenez à me connaître",
+		"description": "Ingénieur biomédical et expert en relations internationales reliant l'innovation en santé à la collaboration mondiale"
+	},
+    "ContactPage": {
+        "title": "Entrons en contact",
+        "description": "Vous avez une question ou souhaitez collaborer ? J'aimerais avoir de vos nouvelles.",
+        "contact-info-title": "Informations de contact",
+        "contact-info-description": "N'hésitez pas à me contacter via l'un de ces moyens. Je vous répondrai dès que possible.",
+        "contact-info-phone": "Téléphone",
+        "contact-info-whatsapp": "WhatsApp",
+        "contact-info-email": "E-mail",
+        "contact-info-location": "Lieu",
+        "connect-title": "Connectez-vous avec moi",
+        "connect-description": "Suivez-moi sur les réseaux sociaux pour rester à jour avec mes derniers projets et activités.",
+        "connect-follow-on": "Suivre sur",
+		"reach-out-title": "Contactez-moi",
+		"reach-out-description": "Je ferai de mon mieux pour vous répondre dès que possible",
+		"name": "Votre nom",
+		"email": "Votre e-mail",
+		"subject": "Objet",
+		"message": "Votre message",
+		"send-message-button": "Envoyer le message",
+		"message-send-success": "Message envoyé avec succès"
+    },
+	"NotFoundPage": {
+		"not-found": "Page non trouvée",
+		"no-resource": "Ressource demandée introuvable",
+		"home": "Retour à l'accueil"
+	},
+	"ErrorPage": {
+		"message": "Erreur interne du serveur",
+		"description": "Une erreur inattendue est survenue. Veuillez réessayer plus tard.",
+		"button": "Réessayer"
+	},
+	"EmptyActivitiesList": {
+		"title": "Aucune activité trouvée",
+		"all-description": "Aucune activité à afficher pour le moment.",
+		"category-description": "Aucune activité trouvée dans la catégorie personnelle.",
+		"button": "Voir toutes les activités",
+		"no-activity-details": "Activité introuvable"
+	},
+	"EmptyGalleriesList": {
+		"title": "Aucune galerie trouvée",
+		"no-gallery-details": "Galerie introuvable"
+	}
+}
