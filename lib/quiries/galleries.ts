@@ -36,7 +36,7 @@ export const galleriesQuery = ({
 				page: page,
 				pageSize: 24,
 			},
-			fields: ['title', 'slug', 'locale'],
+			fields: ['title', 'slug'],
 			locale: locale,
 		},
 		{ encodeValuesOnly: true }

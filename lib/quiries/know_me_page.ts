@@ -3,7 +3,7 @@ import qs from 'qs';
 export const knowMePageQuery = (locale: string = 'en') =>
 	qs.stringify(
 		{
-			fields: ['locale'],
+			fields: ['id'],
 			populate: {
 				details: {
 					populate: {
