@@ -1,9 +1,11 @@
-import { memo } from 'react';
+import { getTranslations } from 'next-intl/server';
 
-function HeroTitleComponent() {
+export async function HeroTitle() {
+	const t = await getTranslations();
+
 	return (
 		<h1 className='relative mb-8 text-6xl font-bold !leading-tight md:text-7xl'>
-			<span className='text-white'>I am</span>
+			<span className='text-white'>{t('HomePage.name')}</span>
 			<br />
 			<span className='bg-gradient-to-r from-indigo-200 to-purple-200 bg-clip-text text-transparent'>
 				Adébayo
@@ -15,5 +17,3 @@ function HeroTitleComponent() {
 		</h1>
 	);
 }
-
-export const HeroTitle = memo(HeroTitleComponent);

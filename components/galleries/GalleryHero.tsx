@@ -1,13 +1,11 @@
 import { ChevronDown } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import Link from 'next/link';
+import { FunctionComponent } from 'react';
 
-export function GalleryHero() {
-	const scrollToContent = () => {
-		window.scrollTo({
-			top: window.innerHeight,
-			behavior: 'smooth',
-		});
-	};
+export const GalleryHero: FunctionComponent = () => {
+	const t = useTranslations();
 
 	return (
 		<div className='relative min-h-[75vh] bg-gradient-to-br from-gray-900 via-indigo-900 to-purple-900 lg:h-[90vh]'>
@@ -25,26 +23,25 @@ export function GalleryHero() {
 
 			<div className='relative z-10 flex h-full flex-col items-center justify-center px-4 pt-[10rem] text-center'>
 				<h1 className='mb-6 text-5xl font-bold text-white md:text-7xl'>
-					WELCOME TO MY
+					{t('GalleriesPage.title-prefix')}
 					<br />
 					<span className='bg-gradient-to-r from-indigo-200 to-purple-200 bg-clip-text text-transparent'>
-						VISUAL DIARY
+						{t('GalleriesPage.title-suffix')}
 					</span>
 				</h1>
 
 				<p className='mb-12 max-w-2xl text-xl text-gray-300'>
-					A collection of moments, memories, and milestones in my journey
-					through healthcare innovation and international relations
+					{t('GalleriesPage.description')}
 				</p>
 
-				<button
-					onClick={scrollToContent}
+				<Link
 					className='animate-bounce text-white/80 transition-colors hover:text-white'
 					aria-label='Scroll to content'
+					href={`#${t('Shared.content')}`}
 				>
 					<ChevronDown className='h-10 w-10' />
-				</button>
+				</Link>
 			</div>
 		</div>
 	);
-}
+};

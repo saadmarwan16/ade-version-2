@@ -1,24 +1,22 @@
 'use client';
 
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, FunctionComponent } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Avatar } from '../ui/Avatar';
 import { LanguageSelector } from '../ui/LanguageSelector';
+import { Link, Locale } from '@/i18n/routing';
+import { getNavLinks } from '@/utils/constants/navLinks';
 
-const navLinks = [
-	{ href: '/', label: 'Welcome' },
-	{ href: '/about', label: 'Know me' },
-	{ href: '/activities', label: 'Activities' },
-	{ href: '/galleries', label: 'Galleries' },
-	{ href: '/contact', label: 'Contact' },
-];
+interface NavbarProps {
+	locale: Locale;
+}
 
-export function Navbar() {
+export const Navbar: FunctionComponent<NavbarProps> = ({ locale }) => {
 	const pathname = usePathname();
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement>(null);
+	const navLinks = getNavLinks(locale);
 
 	useEffect(() => {
 		function handleClickOutside(event: MouseEvent) {
@@ -71,18 +69,18 @@ export function Navbar() {
 
 						{/* Desktop Navigation */}
 						<div className='hidden items-center gap-8 lg:flex'>
-							{navLinks.map(({ href, label }) => (
+							{navLinks.map(({ href, label, path }) => (
 								<Link
 									key={label}
 									href={href}
 									className={`text-lg font-medium text-gray-600 transition-colors hover:text-indigo-600 lg:text-xl ${
-										pathname === href ? 'text-indigo-600' : ''
+										pathname === path ? 'text-indigo-600' : ''
 									}`}
 								>
 									{label}
 								</Link>
 							))}
-							<LanguageSelector />
+							<LanguageSelector locale={locale} />
 						</div>
 
 						{/* Mobile Menu Button */}
@@ -137,13 +135,13 @@ export function Navbar() {
 				<div className='flex-1 overflow-y-auto'>
 					<div className='space-y-6 px-4 py-6'>
 						<div className='space-y-3'>
-							{navLinks.map(({ href, label }) => (
+							{navLinks.map(({ href, label, path }) => (
 								<Link
 									key={label}
 									href={href}
 									onClick={() => setIsOpen(false)}
 									className={`block rounded-lg px-4 py-3 text-lg font-medium transition-all ${
-										pathname === href
+										pathname === path
 											? 'bg-indigo-50 text-indigo-600 shadow-sm'
 											: 'text-gray-600 hover:bg-gray-50 hover:text-indigo-600'
 									}`}
@@ -154,11 +152,11 @@ export function Navbar() {
 						</div>
 
 						<div className='border-t border-gray-100 px-4 pt-4'>
-							<LanguageSelector />
+							<LanguageSelector locale={locale} />
 						</div>
 					</div>
 				</div>
 			</div>
 		</>
 	);
-}
+};

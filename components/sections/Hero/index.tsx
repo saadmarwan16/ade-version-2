@@ -1,9 +1,8 @@
-import { memo } from 'react';
 import { HeroBackground } from './HeroBackground';
 import { HeroContent } from './HeroContent';
 import Image from 'next/image';
 
-function HeroComponent() {
+export const Hero = () => {
 	return (
 		<section className='relative min-h-screen overflow-hidden bg-gradient-to-br from-gray-900 via-indigo-900 to-purple-900'>
 			{/* Background image with overlay */}
@@ -26,5 +25,3 @@ function HeroComponent() {
 		</section>
 	);
 }
-
-export const Hero = memo(HeroComponent);

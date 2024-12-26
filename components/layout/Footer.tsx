@@ -1,12 +1,15 @@
 import Link from 'next/link';
 import { Avatar } from '../ui/Avatar';
 import { SocialLinks } from '../ui/SocialLinks';
+import { getTranslations } from 'next-intl/server';
 
 const footerLinks = [
 	{ href: 'mailto:info@adebayoademon.com', label: 'info@adebayoademon.com' },
 ];
 
-export function Footer() {
+export const Footer = async () => {
+	const t = await getTranslations();
+
 	return (
 		<footer className='border-t border-gray-100 bg-gray-100/80'>
 			<div className='mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8'>
@@ -26,7 +29,7 @@ export function Footer() {
 
 				<div className='mt-8 flex flex-col items-center justify-between gap-2 border-t border-gray-200 pt-8 sm:flex-row sm:gap-6'>
 					<p className='text-base text-gray-600 md:text-lg'>
-						© 2024 ADE | All rights reserved
+						© 2024 ADE | {t('Shared.rights')}
 					</p>
 					<div className='flex gap-8'>
 						{footerLinks.map(({ href, label }) => (
@@ -43,4 +46,4 @@ export function Footer() {
 			</div>
 		</footer>
 	);
-}
+};

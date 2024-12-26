@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { GalleryCard } from './GalleryCard';
 import { galleries } from './data';
 import { LoadingSpinner } from '../activities/LoadingSpinner';
@@ -11,7 +11,9 @@ interface GalleryGridProps {
 	searchQuery: string;
 }
 
-export function GalleryGrid({ searchQuery }: GalleryGridProps) {
+export const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
+	searchQuery,
+}) => {
 	const [loading, setLoading] = useState(false);
 	const [displayCount, setDisplayCount] = useState(6);
 
@@ -51,4 +53,4 @@ export function GalleryGrid({ searchQuery }: GalleryGridProps) {
 			/>
 		</>
 	);
-}
+};

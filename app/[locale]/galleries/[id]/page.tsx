@@ -1,6 +1,7 @@
 import { galleries } from '@/components/galleries/data';
 import { GalleryMasonry } from '@/components/galleries/details/GalleryMasonry';
 import { GalleryShare } from '@/components/galleries/details/GalleryShare';
+import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import { FunctionComponent } from 'react';
 
@@ -14,15 +15,16 @@ export const generateStaticParams = () => {
 	return galleries.map((gallery) => ({ id: gallery.id.toString() }));
 };
 
-const GalleryDetailsPage: FunctionComponent<GalleryDetailsPageProps> = ({
+const GalleryDetailsPage: FunctionComponent<GalleryDetailsPageProps> = async ({
 	params: { id },
 }) => {
+	const t = await getTranslations();
 	const gallery = galleries.find((g) => g.id === Number(id));
 
 	if (!gallery) {
 		return (
 			<div className='flex min-h-screen items-center justify-center'>
-				<p className='text-gray-600'>Gallery not found</p>
+				<p className='text-gray-600'>{t('NotFoundPage.not-found')}</p>
 			</div>
 		);
 	}

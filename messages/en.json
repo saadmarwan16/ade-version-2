@@ -5,6 +5,8 @@
 		"activities": "Activities",
 		"galleries": "Galleries",
 		"contact": "Contact",
+		"projects": "projects",
+		"content": "content",
 		"rights": "All rights reserved"
 	},
 	"HomePage": {
@@ -24,7 +26,9 @@
 	"ActivitiesPage": {
 		"title": "Journey Through Impact",
 		"description": "Explore my path of innovation in healthcare, international relations, and community development. Each activity represents a step towards positive change in Africa and beyond.",
-        "search-placeholder": "Search activities...",
+        "activities": "Activities",
+		"projects": "Projects",
+		"search-placeholder": "Search activities...",
         "sort-by-button": "Sort by",
         "latest-first-option": "Latest first",
         "oldest-first-option": "Oldest first",

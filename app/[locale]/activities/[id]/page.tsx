@@ -6,6 +6,7 @@ import { RelatedActivities } from '@/components/activities/details/RelatedActivi
 import { ImageCarousel } from '@/components/activities/carousel/ImageCarousel';
 import Image from 'next/image';
 import { FunctionComponent } from 'react';
+import { getTranslations } from 'next-intl/server';
 
 interface ActivityDetailsPageProps {
 	params: {
@@ -17,15 +18,16 @@ export const generateStaticParams = () => {
 	return activities.map((activity) => ({ id: activity.id.toString() }));
 };
 
-const ActivityDetailsPage: FunctionComponent<ActivityDetailsPageProps> = ({
+const ActivityDetailsPage: FunctionComponent<ActivityDetailsPageProps> = async ({
 	params: { id },
 }) => {
+	const t = await getTranslations();
 	const activity = activities.find((a) => a.id === Number(id));
 
 	if (!activity) {
 		return (
 			<div className='flex min-h-screen items-center justify-center'>
-				<p className='text-gray-600'>Activity not found</p>
+				<p className='text-gray-600'>{t('NotFoundPage.not-found')}</p>
 			</div>
 		);
 	}
@@ -100,14 +102,14 @@ const ActivityDetailsPage: FunctionComponent<ActivityDetailsPageProps> = ({
 					<div className='space-y-8'>
 						<div className='rounded-xl bg-white p-6 shadow-sm'>
 							<h3 className='mb-4 text-lg font-semibold text-gray-900'>
-								Share
+								{t('ActivityDetailsPage.share')}
 							</h3>
 							<ActivityShare />
 						</div>
 
 						<div className='rounded-xl bg-white p-6 shadow-sm'>
 							<h3 className='mb-4 text-lg font-semibold text-gray-900'>
-								Related Activities
+								{t('ActivityDetailsPage.related-activities-title')}
 							</h3>
 							<RelatedActivities
 								currentId={activity.id}

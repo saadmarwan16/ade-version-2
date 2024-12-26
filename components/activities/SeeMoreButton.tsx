@@ -1,4 +1,6 @@
 import { ChevronDown } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { FunctionComponent } from 'react';
 
 interface SeeMoreButtonProps {
 	onClick: () => void;
@@ -6,11 +8,13 @@ interface SeeMoreButtonProps {
 	hasMore: boolean;
 }
 
-export function SeeMoreButton({
+export const SeeMoreButton: FunctionComponent<SeeMoreButtonProps> = ({
 	onClick,
 	loading,
 	hasMore,
-}: SeeMoreButtonProps) {
+}) => {
+	const t = useTranslations();
+
 	if (!hasMore) return null;
 
 	return (
@@ -25,8 +29,10 @@ export function SeeMoreButton({
 				) : (
 					<ChevronDown className='h-5 w-5 transition-transform group-hover:translate-y-0.5' />
 				)}
-				<span className='font-medium'>See More</span>
+				<span className='font-medium'>
+					{t('ActivitiesPage.see-more-button')}
+				</span>
 			</button>
 		</div>
 	);
-}
+};

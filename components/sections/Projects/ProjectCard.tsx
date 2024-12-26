@@ -5,6 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import { Project } from './types';
 import Image from 'next/image';
 import { ProjectModal } from '@/components/projects/ProjectModal';
+import { useTranslations } from 'next-intl';
 
 interface ProjectCardProps {
 	project: Project;
@@ -12,6 +13,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const t = useTranslations();
 
 	const typeColors = {
 		'Healthcare Technology':
@@ -58,7 +60,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
 					</p>
 
 					<button className='group mt-auto inline-flex items-center gap-2 font-medium text-indigo-600 hover:text-indigo-700'>
-						Learn more
+						{t('HomePage.learn-more-button')}
 						<ArrowRight className='h-4 w-4 transition-transform group-hover:translate-x-1' />
 					</button>
 				</div>

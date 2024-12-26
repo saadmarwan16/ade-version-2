@@ -1,17 +1,18 @@
-import Link from 'next/link';
 import Image from 'next/image';
 import { Calendar } from 'lucide-react';
 import { activities } from '../data';
+import { FunctionComponent } from 'react';
+import { Link } from '@/i18n/routing';
 
 interface RelatedActivitiesProps {
 	currentId: number;
 	category: string;
 }
 
-export function RelatedActivities({
+export const RelatedActivities: FunctionComponent<RelatedActivitiesProps> = ({
 	currentId,
 	category,
-}: RelatedActivitiesProps) {
+}) => {
 	const relatedActivities = activities
 		.filter(
 			(activity) => activity.category === category && activity.id !== currentId
@@ -23,7 +24,12 @@ export function RelatedActivities({
 			{relatedActivities.map((activity) => (
 				<Link
 					key={activity.id}
-					href={`/activities/${activity.id}`}
+					href={{
+						pathname: '/activities/[slug]',
+						params: {
+							slug: activity.id.toString(),
+						},
+					}}
 					className='group block'
 				>
 					<div className='flex gap-4'>
@@ -49,4 +55,4 @@ export function RelatedActivities({
 			))}
 		</div>
 	);
-}
+};

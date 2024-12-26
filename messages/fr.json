@@ -5,6 +5,8 @@
 		"activities": "Activités",
 		"galleries": "Galeries",
 		"contact": "Contact",
+		"projects": "projets",
+		"content": "contenu",
 		"rights": "Tous droits réservés"
 	},
 	"HomePage": {
@@ -24,6 +26,8 @@
 	"ActivitiesPage": {
 		"title": "Parcours d'impact",
 		"description": "Explorez mon cheminement dans l'innovation en santé, les relations internationales et le développement communautaire. Chaque activité représente une étape vers un changement positif en Afrique et au-delà.",
+        "activities": "Activités",
+		"projects": "Projets",
         "search-placeholder": "Rechercher des activités...",
         "sort-by-button": "Trier par",
         "latest-first-option": "Les plus récentes",

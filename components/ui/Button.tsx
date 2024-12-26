@@ -1,9 +1,9 @@
-import Link from 'next/link';
+import { Link, StaticPathnames } from '@/i18n/routing';
 import { ButtonHTMLAttributes } from 'react';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	variant?: 'primary' | 'secondary';
-	href?: string;
+	href?: StaticPathnames;
 	children: React.ReactNode;
 }
 

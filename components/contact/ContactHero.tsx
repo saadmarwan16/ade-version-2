@@ -1,8 +1,12 @@
 import { ChevronDown } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
+import { FunctionComponent } from 'react';
 
-export function ContactHero() {
+export const ContactHero: FunctionComponent = () => {
+	const t = useTranslations();
+
 	return (
 		<section className='relative h-[65vh] bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 lg:h-[90vh]'>
 			<div className='absolute inset-0'>
@@ -18,11 +22,10 @@ export function ContactHero() {
 
 			<div className='relative z-10 mx-auto flex h-full max-w-7xl flex-col items-center justify-center px-4 pt-20 text-center sm:px-6 lg:px-8'>
 				<h1 className='mb-6 text-4xl font-bold text-white sm:text-5xl md:text-6xl'>
-					Let&apos;s Connect
+					{t('ContactPage.title')}
 				</h1>
 				<p className='mx-auto mb-12 max-w-3xl text-xl text-indigo-100'>
-					Have a question or want to collaborate? I&apos;d love to hear from
-					you.
+					{t('ContactPage.description')}
 				</p>
 
 				<Link

@@ -4,8 +4,9 @@ import { ContactHero } from '@/components/contact/ContactHero';
 import { ContactInfo } from '@/components/contact/ContactInfo';
 import { SocialLinks } from '@/components/contact/SocialLinks';
 import { ContactSection } from '@/components/contact/ContactSection';
+import { FunctionComponent } from 'react';
 
-export default function ContactPage() {
+const ContactPage: FunctionComponent = () => {
 	return (
 		<main className='min-h-screen bg-gradient-to-br from-gray-50 to-white'>
 			<ContactHero />
@@ -18,4 +19,6 @@ export default function ContactPage() {
 			<ContactSection />
 		</main>
 	);
-}
+};
+
+export default ContactPage;

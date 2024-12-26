@@ -1,4 +1,6 @@
 import { Linkedin, Twitter, Instagram, Facebook } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { FunctionComponent } from 'react';
 
 const socialLinks = [
 	{
@@ -27,16 +29,17 @@ const socialLinks = [
 	},
 ];
 
-export function SocialLinks() {
+export const SocialLinks: FunctionComponent = () => {
+	const t = useTranslations();
+
 	return (
 		<div className='space-y-8'>
 			<div>
 				<h2 className='mb-4 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-3xl font-bold text-transparent'>
-					Connect With Me
+					{t('ContactPage.connect-title')}
 				</h2>
 				<p className='text-lg text-gray-600'>
-					Follow me on social media to stay updated with my latest projects and
-					activities.
+					{t('ContactPage.connect-description')}
 				</p>
 			</div>
 
@@ -55,7 +58,7 @@ export function SocialLinks() {
 						</div>
 						<div>
 							<div className='text-sm font-medium text-gray-500 group-hover:text-white/80'>
-								Follow on
+								{t('ContactPage.connect-follow-on')}
 							</div>
 							<div className='text-lg font-medium group-hover:text-white'>
 								{label}
@@ -66,4 +69,4 @@ export function SocialLinks() {
 			</div>
 		</div>
 	);
-}
+};

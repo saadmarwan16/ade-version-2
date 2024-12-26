@@ -1,16 +1,17 @@
-import { memo } from 'react';
+import { FunctionComponent } from 'react';
+import { getTranslations } from 'next-intl/server';
 
-function HeroDescriptionComponent() {
+export const HeroDescription: FunctionComponent = async () => {
+	const t = await getTranslations();
+
 	return (
 		<div className='mb-8 space-y-4'>
 			<p className='text-2xl font-medium text-indigo-200'>
-				Biomedical Engineer & International Relations Expert
+				{t('HomePage.profession')}
 			</p>
 			<p className='max-w-2xl text-xl text-gray-300'>
-				Bridging the gap between healthcare innovation and global collaboration
+				{t('HomePage.description')}
 			</p>
 		</div>
 	);
-}
-
-export const HeroDescription = memo(HeroDescriptionComponent);
+};

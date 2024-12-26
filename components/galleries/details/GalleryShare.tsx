@@ -1,16 +1,32 @@
+'use client';
+
 import { Linkedin, Facebook, Twitter, Mail, Link } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { FunctionComponent } from 'react';
 
 interface GalleryShareProps {
 	variant?: 'default' | 'hero';
 }
 
-export function GalleryShare({ variant = 'default' }: GalleryShareProps) {
+export const GalleryShare: FunctionComponent<GalleryShareProps> = ({
+	variant = 'default',
+}) => {
+	const t = useTranslations();
+
 	const shareButtons = [
 		{ icon: Linkedin, label: 'LinkedIn', color: 'text-[#0077b5]' },
 		{ icon: Facebook, label: 'Facebook', color: 'text-[#1877f2]' },
 		{ icon: Twitter, label: 'Twitter', color: 'text-[#1da1f2]' },
-		{ icon: Mail, label: 'Email', color: 'text-gray-600' },
-		{ icon: Link, label: 'Copy Link', color: 'text-indigo-600' },
+		{
+			icon: Mail,
+			label: t('ActivityDetailsPage.email'),
+			color: 'text-gray-600',
+		},
+		{
+			icon: Link,
+			label: t('ActivityDetailsPage.copy-link'),
+			color: 'text-indigo-600',
+		},
 	];
 
 	if (variant === 'hero') {
@@ -42,4 +58,4 @@ export function GalleryShare({ variant = 'default' }: GalleryShareProps) {
 			))}
 		</div>
 	);
-}
+};

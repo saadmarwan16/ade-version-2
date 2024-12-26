@@ -5,6 +5,8 @@
 		"activities": "Etkinlikler",
 		"galleries": "Galeriler",
 		"contact": "İletişim",
+		"projects": "projeler",
+		"content": "icerik",
 		"rights": "Tüm hakları saklıdır"
 	},
 	"HomePage": {
@@ -24,7 +26,9 @@
 	"ActivitiesPage": {
 		"title": "Etkili Yolculuk",
 		"description": "Sağlıkta inovasyon, uluslararası ilişkiler ve toplumsal gelişim yolculuğumu keşfedin. Her etkinlik, Afrika ve ötesinde olumlu değişime doğru bir adımdır.",
-        "search-placeholder": "Etkinlikleri ara...",
+        "activities": "Etkinlikler",
+		"projects": "Projeler",
+		"search-placeholder": "Etkinlikleri ara...",
         "sort-by-button": "Sırala",
         "latest-first-option": "En yeni önce",
         "oldest-first-option": "En eski önce",

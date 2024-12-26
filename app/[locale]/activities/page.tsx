@@ -5,10 +5,12 @@ import { Search, Activity, Briefcase } from 'lucide-react';
 import { ActivityFilters } from '@/components/activities/ActivityFilters';
 import { ActivityGrid } from '@/components/activities/ActivityGrid';
 import { ActivitySort } from '@/components/activities/ActivitySort';
+import { useTranslations } from 'next-intl';
 
 export default function AllActivities() {
 	const [searchQuery, setSearchQuery] = useState('');
 	const [activeFilter, setActiveFilter] = useState('All');
+	const t = useTranslations();
 
 	return (
 		<div className='min-h-screen'>
@@ -23,12 +25,10 @@ export default function AllActivities() {
 				<div className='relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
 					<div className='mb-12 text-center'>
 						<h1 className='mb-6 text-4xl font-bold text-white md:text-6xl'>
-							Journey Through Impact
+							{t('ActivitiesPage.title')}
 						</h1>
 						<p className='mx-auto max-w-3xl text-xl text-indigo-100'>
-							Explore my path of innovation in healthcare, international
-							relations, and community development. Each activity represents a
-							step towards positive change in Africa and beyond.
+							{t('ActivitiesPage.description')}
 						</p>
 					</div>
 
@@ -36,12 +36,12 @@ export default function AllActivities() {
 						<div className='w-full max-w-xs rounded-xl bg-white/10 p-8 text-center backdrop-blur-sm'>
 							<Activity className='mx-auto mb-4 h-10 w-10 text-indigo-200' />
 							<div className='mb-2 text-3xl font-bold text-white'>150+</div>
-							<div className='text-lg text-indigo-200'>Activities</div>
+							<div className='text-lg text-indigo-200'>{t('ActivitiesPage.activities')}</div>
 						</div>
 						<div className='w-full max-w-xs rounded-xl bg-white/10 p-8 text-center backdrop-blur-sm'>
 							<Briefcase className='mx-auto mb-4 h-10 w-10 text-indigo-200' />
 							<div className='mb-2 text-3xl font-bold text-white'>25+</div>
-							<div className='text-lg text-indigo-200'>Projects</div>
+							<div className='text-lg text-indigo-200'>{t('ActivitiesPage.projects')}</div>
 						</div>
 					</div>
 				</div>
@@ -56,7 +56,7 @@ export default function AllActivities() {
 							<Search className='absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400' />
 							<input
 								type='text'
-								placeholder='Search activities...'
+								placeholder={t('ActivitiesPage.search-placeholder')}
 								value={searchQuery}
 								onChange={(e) => setSearchQuery(e.target.value)}
 								className='w-full rounded-xl border border-gray-200 py-3 pl-10 pr-4 transition-all focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200'

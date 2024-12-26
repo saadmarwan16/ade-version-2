@@ -1,13 +1,15 @@
 import { Calendar, ArrowRight } from 'lucide-react';
 import { Activity } from './types';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/routing';
 
 interface ActivityCardProps {
 	activity: Activity;
 }
 
 export function ActivityCard({ activity }: ActivityCardProps) {
+	const t = useTranslations();
 	const categoryColors = {
 		Diplomacy: 'bg-purple-50 text-purple-700 ring-1 ring-purple-600/10',
 		Technology: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-600/10',
@@ -15,7 +17,15 @@ export function ActivityCard({ activity }: ActivityCardProps) {
 	};
 
 	return (
-		<Link href={`/activities/${activity.id}`} className='block h-full'>
+		<Link
+			href={{
+				pathname: '/activities/[slug]',
+				params: {
+					slug: activity.id,
+				},
+			}}
+			className='block h-full'
+		>
 			<div className='group flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all duration-300 hover:shadow-lg'>
 				<div className='relative aspect-video overflow-hidden'>
 					<div className='absolute inset-0 z-10 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
@@ -46,7 +56,7 @@ export function ActivityCard({ activity }: ActivityCardProps) {
 					</h3>
 					<div className='mt-auto'>
 						<span className='inline-flex items-center gap-2 font-medium text-indigo-600 group-hover:text-indigo-700'>
-							Read more
+							{t('ActivitiesPage.read-more-button')}
 							<ArrowRight className='h-4 w-4 transition-transform group-hover:translate-x-1' />
 						</span>
 					</div>

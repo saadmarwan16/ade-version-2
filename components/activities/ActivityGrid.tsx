@@ -1,22 +1,27 @@
 'use client';
 
-import { useState, useCallback } from 'react';
-import Link from 'next/link';
+import { useState, useCallback, FunctionComponent } from 'react';
 import Image from 'next/image';
 import { Calendar, ArrowRight } from 'lucide-react';
 import { activities } from './data';
 import { EmptyState } from './EmptyState';
 import { LoadingSpinner } from './LoadingSpinner';
 import { SeeMoreButton } from './SeeMoreButton';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/routing';
 
 interface ActivityGridProps {
 	filter: string;
 	searchQuery: string;
 }
 
-export function ActivityGrid({ filter, searchQuery }: ActivityGridProps) {
+export const ActivityGrid: FunctionComponent<ActivityGridProps> = ({
+	filter,
+	searchQuery,
+}) => {
 	const [loading, setLoading] = useState(false);
 	const [displayCount, setDisplayCount] = useState(6);
+	const t = useTranslations();
 
 	const filteredActivities = activities.filter((activity) => {
 		const matchesFilter = filter === 'All' || activity.category === filter;
@@ -49,7 +54,12 @@ export function ActivityGrid({ filter, searchQuery }: ActivityGridProps) {
 				{visibleActivities.map((activity) => (
 					<Link
 						key={activity.id}
-						href={`/activities/${activity.id}`}
+						href={{
+							pathname: '/activities/[slug]',
+							params: {
+								slug: activity.id.toString(),
+							},
+						}}
 						className='block h-full'
 					>
 						<div className='group flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all duration-300 hover:shadow-lg'>
@@ -85,7 +95,7 @@ export function ActivityGrid({ filter, searchQuery }: ActivityGridProps) {
 
 								<div className='mt-auto'>
 									<span className='inline-flex items-center gap-2 font-medium text-indigo-600 group-hover:text-indigo-700'>
-										Read more
+										{t('ActivitiesPage.read-more-button')}
 										<ArrowRight className='h-4 w-4 transition-transform group-hover:translate-x-1' />
 									</span>
 								</div>
@@ -104,4 +114,4 @@ export function ActivityGrid({ filter, searchQuery }: ActivityGridProps) {
 			/>
 		</>
 	);
-}
+};

@@ -1,23 +1,30 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, FunctionComponent, useMemo } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { Link, Locale } from '@/i18n/routing';
 
 interface Language {
-	code: string;
+	code: Locale;
 	name: string;
 	flag: string;
 }
 
-const languages: Language[] = [
-	{ code: 'en', name: 'English', flag: '🇺🇸' },
-	{ code: 'fr', name: 'Français', flag: '🇫🇷' },
-	{ code: 'tr', name: 'Türkçe', flag: '🇹🇷' },
-];
+interface LanguageSelectorProps {
+	locale: Locale;
+}
 
-export function LanguageSelector() {
+const languages: { [key: string]: Language } = {
+	en: { code: 'en', name: 'English', flag: '🇺🇸' },
+	fr: { code: 'fr', name: 'Français', flag: '🇫🇷' },
+	tr: { code: 'tr', name: 'Türkçe', flag: '🇹🇷' },
+};
+
+export const LanguageSelector: FunctionComponent<LanguageSelectorProps> = ({
+	locale,
+}) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [selectedLang, setSelectedLang] = useState(languages[0]);
+	const selectedLang = useMemo(() => languages[locale], [languages, locale]);
 	const dropdownRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -59,30 +66,32 @@ export function LanguageSelector() {
 						: 'pointer-events-none translate-y-2 opacity-0'
 				}`}
 			>
-				{languages.map((lang) => (
-					<button
-						key={lang.code}
-						onClick={() => {
-							setSelectedLang(lang);
-							setIsOpen(false);
-						}}
-						className={`flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-gray-50 ${
-							selectedLang.code === lang.code ? 'bg-indigo-50' : ''
-						}`}
-					>
-						<span className='text-lg'>{lang.flag}</span>
-						<span
-							className={`font-medium ${
-								selectedLang.code === lang.code
-									? 'text-indigo-600'
-									: 'text-gray-700'
+				{Object.keys(languages).map((key) => {
+					const language = languages[key];
+
+					return (
+						<Link
+							key={key}
+							href='/'
+							locale={language.code}
+							className={`flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-gray-50 ${
+								selectedLang.code === language.code ? 'bg-indigo-50' : ''
 							}`}
 						>
-							{lang.name}
-						</span>
-					</button>
-				))}
+							<span className='text-lg'>{language.flag}</span>
+							<span
+								className={`font-medium ${
+									selectedLang.code === language.code
+										? 'text-indigo-600'
+										: 'text-gray-700'
+								}`}
+							>
+								{language.name}
+							</span>
+						</Link>
+					);
+				})}
 			</div>
 		</div>
 	);
-}
+};
