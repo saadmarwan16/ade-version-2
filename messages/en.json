@@ -89,8 +89,8 @@
 		"home": "Return Home"
 	},
 	"ErrorPage": {
-		"message": "Internal Server Error",
-		"description": "A very unexpected error occurred. Please try again later.",
+		"internal-error-message": "Internal Server Error",
+		"component-error-message": "Component Error",
 		"button": "Try again"
 	},
 	"EmptyActivitiesList": {

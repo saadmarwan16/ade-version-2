@@ -1,7 +1,13 @@
+import { TProject } from '@/lib/types/home_page';
 import { ProjectsList } from './ProjectsList';
 import { getTranslations } from 'next-intl/server';
+import { FunctionComponent } from 'react';
 
-export const Projects = async () => {
+interface ProjectsProps {
+	projects: TProject[];
+}
+
+export const Projects: FunctionComponent<ProjectsProps> = async ({projects}) => {
 	const t = await getTranslations();
 
 	return (
@@ -18,7 +24,7 @@ export const Projects = async () => {
 						{t('HomePage.featured-projects-description')}
 					</p>
 				</div>
-				<ProjectsList />
+				<ProjectsList projects={projects} />
 			</div>
 		</section>
 	);

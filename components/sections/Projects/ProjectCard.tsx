@@ -1,26 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { Project } from './types';
 import Image from 'next/image';
 import { ProjectModal } from '@/components/projects/ProjectModal';
 import { useTranslations } from 'next-intl';
+import { TProject } from '@/lib/types/home_page';
+import { constructImageLink } from '@/lib/contructImageLink';
 
 interface ProjectCardProps {
-	project: Project;
+	project: TProject;
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export const ProjectCard: FunctionComponent<ProjectCardProps> = ({
+	project,
+}) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const t = useTranslations();
 
 	const typeColors = {
-		'Healthcare Technology':
-			'text-indigo-700 bg-indigo-50 ring-1 ring-purple-600/10',
-		'Global Health':
-			'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-600/10',
-		'Data Security': 'bg-pink-50 text-pink-700 ring-1 ring-pink-600/10',
+		blue: 'text-indigo-700 bg-indigo-50 ring-1 ring-purple-600/10',
+		green: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-600/10',
+		red: 'bg-pink-50 text-pink-700 ring-1 ring-pink-600/10',
+		purple: 'bg-purple-50 text-purple-700 ring-1 ring-purple-600/10',
 	};
 
 	return (
@@ -32,7 +34,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
 				<div className='relative aspect-video overflow-hidden'>
 					<div className='absolute inset-0 z-10 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
 					<Image
-						src={project.image}
+						src={constructImageLink(project.image.url)}
 						alt={project.title}
 						width={800}
 						height={450}
@@ -42,13 +44,15 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
 				<div className='flex h-[calc(100%-aspect-video)] flex-col p-6'>
 					<div className='mb-4'>
-						<span
-							className={`inline-block rounded-md px-3 py-1 text-sm font-medium ${
-								typeColors[project.category as keyof typeof typeColors]
-							}`}
-						>
-							{project.category}
-						</span>
+						{project.project_types.map((type) => (
+							<span
+								className={`inline-block rounded-md px-3 py-1 text-sm font-medium ${
+									typeColors[type.color as keyof typeof typeColors]
+								}`}
+							>
+								{type.title}
+							</span>
+						))}
 					</div>
 
 					<h3 className='mb-3 line-clamp-2 text-xl font-bold text-gray-900'>
@@ -73,4 +77,4 @@ export function ProjectCard({ project }: ProjectCardProps) {
 			/>
 		</>
 	);
-}
+};

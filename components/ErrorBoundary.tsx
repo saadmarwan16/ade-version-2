@@ -1,14 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
+import { useState, useEffect, FunctionComponent } from 'react';
 
 interface ErrorBoundaryProps {
 	children: React.ReactNode;
 }
 
-export function ErrorBoundary({ children }: ErrorBoundaryProps) {
+export const ErrorBoundary: FunctionComponent<ErrorBoundaryProps> = ({
+	children,
+}: ErrorBoundaryProps) => {
 	const [hasError, setHasError] = useState(false);
 	const [error, setError] = useState<Error | null>(null);
+	const t = useTranslations();
 
 	useEffect(() => {
 		function handleError(event: ErrorEvent) {
@@ -26,7 +30,7 @@ export function ErrorBoundary({ children }: ErrorBoundaryProps) {
 			<div className='flex min-h-screen items-center justify-center bg-gray-50'>
 				<div className='text-center'>
 					<h2 className='mb-4 text-2xl font-bold text-gray-900'>
-						Something went wrong
+						{t('ErrorPage.internal-error-message')}
 					</h2>
 					<button
 						onClick={() => {
@@ -35,7 +39,7 @@ export function ErrorBoundary({ children }: ErrorBoundaryProps) {
 						}}
 						className='rounded-lg bg-indigo-600 px-4 py-2 text-white transition-colors hover:bg-indigo-700'
 					>
-						Try again
+						{t('ErrorPage.button')}
 					</button>
 					{process.env.NODE_ENV === 'development' && error && (
 						<pre className='mt-4 max-w-xl overflow-auto rounded-lg bg-red-50 p-4 text-sm text-red-600'>
@@ -48,11 +52,14 @@ export function ErrorBoundary({ children }: ErrorBoundaryProps) {
 	}
 
 	return <ErrorBoundaryInner>{children}</ErrorBoundaryInner>;
-}
+};
 
-function ErrorBoundaryInner({ children }: ErrorBoundaryProps) {
+const ErrorBoundaryInner: FunctionComponent<ErrorBoundaryProps> = ({
+	children,
+}: ErrorBoundaryProps) => {
 	const [hasError, setHasError] = useState(false);
 	const [error, setError] = useState<Error | null>(null);
+	const t = useTranslations();
 
 	useEffect(() => {
 		function handleError(event: ErrorEvent) {
@@ -70,7 +77,7 @@ function ErrorBoundaryInner({ children }: ErrorBoundaryProps) {
 			<div className='flex min-h-screen items-center justify-center bg-gray-50'>
 				<div className='text-center'>
 					<h2 className='mb-4 text-2xl font-bold text-gray-900'>
-						Component Error
+						{t('ErrorPage.component-error-message')}
 					</h2>
 					<button
 						onClick={() => {
@@ -79,7 +86,7 @@ function ErrorBoundaryInner({ children }: ErrorBoundaryProps) {
 						}}
 						className='rounded-lg bg-indigo-600 px-4 py-2 text-white transition-colors hover:bg-indigo-700'
 					>
-						Retry Component
+						{t('ErrorPage.button')}
 					</button>
 					{process.env.NODE_ENV === 'development' && error && (
 						<pre className='mt-4 max-w-xl overflow-auto rounded-lg bg-red-50 p-4 text-sm text-red-600'>
@@ -92,4 +99,4 @@ function ErrorBoundaryInner({ children }: ErrorBoundaryProps) {
 	}
 
 	return <>{children}</>;
-}
+};

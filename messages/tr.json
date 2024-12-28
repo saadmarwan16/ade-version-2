@@ -89,8 +89,8 @@
 		"home": "Ana Sayfaya Dön"
 	},
 	"ErrorPage": {
-		"message": "Sunucu Hatası",
-		"description": "Beklenmedik bir hata oluştu. Lütfen daha sonra tekrar deneyin.",
+		"internal-error-message": "Sunucu Hatası",
+		"component-error-message": "Bilesen Hatası",
 		"button": "Tekrar deneyin"
 	},
 	"EmptyActivitiesList": {

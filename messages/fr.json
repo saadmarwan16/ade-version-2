@@ -89,8 +89,8 @@
 		"home": "Retour à l'accueil"
 	},
 	"ErrorPage": {
-		"message": "Erreur interne du serveur",
-		"description": "Une erreur inattendue est survenue. Veuillez réessayer plus tard.",
+		"internal-error-message": "Erreur interne du serveur",
+		"component-error-message": "Erreur de composant",
 		"button": "Réessayer"
 	},
 	"EmptyActivitiesList": {

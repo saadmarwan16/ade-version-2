@@ -78,16 +78,16 @@ const LocaleLayout = async ({
 				className={`${inter.className} antialiased`}
 				suppressHydrationWarning
 			>
-				<Providers>
-					<NextIntlClientProvider messages={messages}>
+				<NextIntlClientProvider messages={messages}>
+					<Providers>
 						<div className='min-h-screen bg-white'>
 							<Navbar locale={locale} />
 							{children}
 							<Footer />
 							<WhatsAppButton />
 						</div>
-					</NextIntlClientProvider>
-				</Providers>
+					</Providers>
+				</NextIntlClientProvider>
 			</body>
 		</html>
 	);

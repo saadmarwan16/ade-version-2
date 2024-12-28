@@ -1,9 +1,10 @@
 import Image from 'next/image';
-import { Project } from './types';
 import { Modal } from '@/components/ui/Modal';
+import { TProject } from '@/lib/types/home_page';
+import { constructImageLink } from '@/lib/contructImageLink';
 
 interface ProjectModalProps {
-	project: Project;
+	project: TProject;
 	isOpen: boolean;
 	onClose: () => void;
 }
@@ -23,7 +24,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
 				{/* Hero Image */}
 				<div className='relative mt-14 aspect-video overflow-hidden rounded-xl'>
 					<Image
-						src={project.image}
+						src={constructImageLink(project.image.url)}
 						alt={project.title}
 						fill
 						className='object-cover'
@@ -34,13 +35,15 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
 				<div className='space-y-6'>
 					<div>
 						<div className='mb-4 flex items-center gap-3'>
-							<span
-								className={`rounded-md px-3 py-1 text-sm font-medium ${
-									typeColors[project.category as keyof typeof typeColors]
-								}`}
-							>
-								{project.category}
-							</span>
+							{project.project_types.map((project_type) => (
+								<span
+									className={`rounded-md px-3 py-1 text-sm font-medium ${
+										typeColors[project_type.color as keyof typeof typeColors]
+									}`}
+								>
+									{project_type.title}
+								</span>
+							))}
 						</div>
 						<h3 className='mb-4 text-2xl font-bold text-gray-900'>
 							{project.title}

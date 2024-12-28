@@ -11,6 +11,7 @@
 	},
 	"dependencies": {
 		"@strapi/blocks-react-renderer": "^1.0.1",
+		"@t3-oss/env-nextjs": "^0.11.1",
 		"framer-motion": "^11.0.5",
 		"lucide-react": "^0.344.0",
 		"next": "^14.1.0",
@@ -23,7 +24,9 @@
 		"react-medium-image-zoom": "^5.1.10",
 		"sharp": "^0.33.2",
 		"swiper": "^11.0.6",
-		"zod": "^3.24.1"
+		"zod": "^3.24.1",
+		"zod-fetch": "^0.1.1",
+		"zod-form-data": "^2.0.4"
 	},
 	"devDependencies": {
 		"@tailwindcss/typography": "^0.5.10",
