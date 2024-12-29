@@ -1,14 +1,18 @@
 'use client';
 
 import { useInView } from 'react-intersection-observer';
-import { Section } from '../types';
+import { TKnowMeDetails } from '@/lib/types/know_me';
+import { FunctionComponent } from 'react';
 
 interface ContentSectionProps {
-	section: Section;
+	detail: TKnowMeDetails;
 	onInView: (inView: boolean) => void;
 }
 
-export function ContentSection({ section, onInView }: ContentSectionProps) {
+export const ContentSection: FunctionComponent<ContentSectionProps> = ({
+	detail,
+	onInView,
+}) => {
 	const { ref } = useInView({
 		threshold: 0.5,
 		onChange: (inView) => onInView(inView),
@@ -21,12 +25,12 @@ export function ContentSection({ section, onInView }: ContentSectionProps) {
 		>
 			<div>
 				<h2 className='mb-3 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-3xl font-bold text-transparent sm:mb-4 sm:text-4xl lg:mb-6'>
-					{section.title}
+					{detail.title}
 				</h2>
 				<p className='text-lg leading-relaxed text-gray-600'>
-					{section.content}
+					{detail.description}
 				</p>
 			</div>
 		</div>
 	);
-}
+};

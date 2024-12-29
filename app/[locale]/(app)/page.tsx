@@ -1,3 +1,6 @@
+import 'dayjs/locale/fr';
+import 'dayjs/locale/tr';
+
 import { Hero } from '@/components/sections/Hero';
 import { Projects } from '@/components/sections/Projects';
 import { Partners } from '@/components/sections/Partners';
@@ -7,10 +10,11 @@ import { fetchWithZod } from '@/lib/fetchWithZod';
 import { HomePageSchema } from '@/lib/types/home_page';
 import { homePageQuery } from '@/lib/quiries/home_page';
 import { env } from '@/env';
+import { Locale } from '@/i18n/routing';
 
 interface HomePageProps {
 	params: {
-		locale: string;
+		locale: Locale;
 	};
 }
 
@@ -26,8 +30,10 @@ const HomePage: FunctionComponent<HomePageProps> = async ({
 		<main>
 			<Hero />
 			{data.projects.length > 0 && <Projects projects={data.projects} />}
-			<Partners />
-			<RecentActivities />
+			{data.partners.length > 0 && <Partners partners={data.partners} />}
+			{data.activities.length > 0 && (
+				<RecentActivities locale={locale} activities={data.activities} />
+			)}
 		</main>
 	);
 };

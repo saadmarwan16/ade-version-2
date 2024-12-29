@@ -1,8 +1,15 @@
 import { getTranslations } from 'next-intl/server';
-import { partners } from './data';
 import { PartnerLogo } from './PartnerLogo';
+import { TPartner } from '@/lib/types/home_page';
+import { FunctionComponent } from 'react';
 
-export const Partners = async () => {
+interface PartnersProps {
+	partners: TPartner[];
+}
+
+export const Partners: FunctionComponent<PartnersProps> = async ({
+	partners,
+}) => {
 	const t = await getTranslations();
 
 	return (
@@ -25,4 +32,4 @@ export const Partners = async () => {
 			</div>
 		</section>
 	);
-}
+};

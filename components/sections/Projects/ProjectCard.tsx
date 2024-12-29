@@ -7,6 +7,7 @@ import { ProjectModal } from '@/components/projects/ProjectModal';
 import { useTranslations } from 'next-intl';
 import { TProject } from '@/lib/types/home_page';
 import { constructImageLink } from '@/lib/contructImageLink';
+import { typeColors } from '@/utils/constants/typeColors';
 
 interface ProjectCardProps {
 	project: TProject;
@@ -17,13 +18,6 @@ export const ProjectCard: FunctionComponent<ProjectCardProps> = ({
 }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const t = useTranslations();
-
-	const typeColors = {
-		blue: 'text-indigo-700 bg-indigo-50 ring-1 ring-purple-600/10',
-		green: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-600/10',
-		red: 'bg-pink-50 text-pink-700 ring-1 ring-pink-600/10',
-		purple: 'bg-purple-50 text-purple-700 ring-1 ring-purple-600/10',
-	};
 
 	return (
 		<>
@@ -43,7 +37,7 @@ export const ProjectCard: FunctionComponent<ProjectCardProps> = ({
 				</div>
 
 				<div className='flex h-[calc(100%-aspect-video)] flex-col p-6'>
-					<div className='mb-4'>
+					<div className='mb-4 flex gap-2 items-center'>
 						{project.project_types.map((type) => (
 							<span
 								className={`inline-block rounded-md px-3 py-1 text-sm font-medium ${

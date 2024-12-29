@@ -1,27 +1,30 @@
 import { Calendar, ArrowRight } from 'lucide-react';
-import { Activity } from './types';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/routing';
+import { Link, Locale } from '@/i18n/routing';
+import { THomePageActivity } from '@/lib/types/home_page';
+import { FunctionComponent } from 'react';
+import { constructImageLink } from '@/lib/contructImageLink';
+import { typeColors } from '@/utils/constants/typeColors';
+import dayjs from 'dayjs';
 
 interface ActivityCardProps {
-	activity: Activity;
+	locale: Locale;
+	activity: THomePageActivity;
 }
 
-export function ActivityCard({ activity }: ActivityCardProps) {
+export const ActivityCard: FunctionComponent<ActivityCardProps> = ({
+	locale,
+	activity,
+}) => {
 	const t = useTranslations();
-	const categoryColors = {
-		Diplomacy: 'bg-purple-50 text-purple-700 ring-1 ring-purple-600/10',
-		Technology: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-600/10',
-		Education: 'bg-pink-50 text-pink-700 ring-1 ring-pink-600/10',
-	};
 
 	return (
 		<Link
 			href={{
 				pathname: '/activities/[slug]',
 				params: {
-					slug: activity.id,
+					slug: activity.slug,
 				},
 			}}
 			className='block h-full'
@@ -30,7 +33,7 @@ export function ActivityCard({ activity }: ActivityCardProps) {
 				<div className='relative aspect-video overflow-hidden'>
 					<div className='absolute inset-0 z-10 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
 					<Image
-						src={activity.image}
+						src={constructImageLink(activity.thumbnail.url)}
 						alt={activity.title}
 						width={800}
 						height={450}
@@ -39,16 +42,18 @@ export function ActivityCard({ activity }: ActivityCardProps) {
 				</div>
 				<div className='flex flex-grow flex-col p-6'>
 					<div className='mb-4 flex items-center gap-3'>
-						<span
-							className={`rounded-md px-3 py-1 text-sm font-medium ${
-								categoryColors[activity.category as keyof typeof categoryColors]
-							}`}
-						>
-							{activity.category}
-						</span>
+						{activity.activity_categories.map((category) => (
+							<span
+								className={`rounded-md px-3 py-1 text-sm font-medium ${
+									typeColors[category.color as keyof typeof typeColors]
+								}`}
+							>
+								{category.title}
+							</span>
+						))}
 						<div className='flex items-center text-sm text-gray-500'>
 							<Calendar className='mr-1 h-4 w-4' />
-							{activity.date}
+							{dayjs(activity.date).locale(locale).format('MMM DD, YYYY')}
 						</div>
 					</div>
 					<h3 className='mb-4 line-clamp-2 text-xl font-semibold text-gray-900'>
@@ -64,4 +69,4 @@ export function ActivityCard({ activity }: ActivityCardProps) {
 			</div>
 		</Link>
 	);
-}
+};

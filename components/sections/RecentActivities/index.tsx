@@ -1,9 +1,18 @@
 import { ArrowRight } from 'lucide-react';
 import { ActivitiesList } from './ActivitiesList';
 import { getTranslations } from 'next-intl/server';
-import { Link } from '@/i18n/routing';
+import { Link, Locale } from '@/i18n/routing';
+import { THomePageActivity } from '@/lib/types/home_page';
+import { FunctionComponent } from 'react';
 
-export const RecentActivities = async () => {
+interface RecentActivitiesProps {
+	locale: Locale;
+	activities: THomePageActivity[];
+}
+
+export const RecentActivities: FunctionComponent<
+	RecentActivitiesProps
+> = async ({ locale, activities }) => {
 	const t = await getTranslations();
 
 	return (
@@ -30,7 +39,7 @@ export const RecentActivities = async () => {
 					</Link>
 				</div>
 
-				<ActivitiesList />
+				<ActivitiesList locale={locale} activities={activities} />
 			</div>
 		</section>
 	);
