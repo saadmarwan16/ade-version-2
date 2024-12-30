@@ -1,12 +1,13 @@
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
-import { Gallery } from './types';
 import { FunctionComponent } from 'react';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
+import { TGallery } from '@/lib/types/galleries';
+import { constructImageLink } from '@/lib/contructImageLink';
 
 interface GalleryCardProps {
-	gallery: Gallery;
+	gallery: TGallery;
 }
 
 export const GalleryCard: FunctionComponent<GalleryCardProps> = ({
@@ -19,7 +20,7 @@ export const GalleryCard: FunctionComponent<GalleryCardProps> = ({
 			href={{
 				pathname: '/galleries/[slug]',
 				params: {
-					slug: gallery.id.toString(),
+					slug: gallery.slug,
 				},
 			}}
 			className='block h-full'
@@ -28,14 +29,14 @@ export const GalleryCard: FunctionComponent<GalleryCardProps> = ({
 				<div className='relative aspect-[4/3] overflow-hidden'>
 					<div className='absolute inset-0 z-10 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
 					<Image
-						src={gallery.coverImage}
+						src={constructImageLink(gallery.thumbnail.url)}
 						alt={gallery.title}
 						fill
 						className='transform object-cover transition-transform duration-500 group-hover:scale-105'
 					/>
 					<div className='absolute right-4 top-4 z-20'>
 						<span className='rounded-md bg-black/50 px-2 py-1 text-sm text-white backdrop-blur-sm'>
-							{gallery.imageCount} {t('GalleriesPage.photos')}
+							{gallery.images.length} {t('GalleriesPage.photos')}
 						</span>
 					</div>
 				</div>

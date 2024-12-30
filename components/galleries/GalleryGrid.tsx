@@ -1,55 +1,76 @@
 'use client';
 
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent } from 'react';
 import { GalleryCard } from './GalleryCard';
-import { galleries } from './data';
 import { LoadingSpinner } from '../activities/LoadingSpinner';
 import { SeeMoreButton } from '../activities/SeeMoreButton';
+import useSWRInfinite from 'swr/infinite';
+import { env } from '@/env';
+import { fetchWithZod } from '@/lib/fetchWithZod';
+import { GalleriesSchema } from '@/lib/types/galleries';
+import { galleriesQuery } from '@/lib/quiries/galleries';
+import { Locale } from '@/i18n/routing';
 import { EmptyState } from './EmptyState';
 
 interface GalleryGridProps {
-	searchQuery: string;
+	locale: Locale;
+	query?: string;
+	sort?: string;
 }
 
 export const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
-	searchQuery,
+	locale,
+	query,
+	sort,
 }) => {
-	const [loading, setLoading] = useState(false);
-	const [displayCount, setDisplayCount] = useState(6);
+	const {
+		data: galleries,
+		size,
+		setSize,
+		isLoading,
+		isValidating,
+	} = useSWRInfinite(
+		(pageIdx) => {
+			return `${env.NEXT_PUBLIC_API_URL}/galleries?${galleriesQuery({
+				locale: locale,
+				page: pageIdx + 1,
+				search: query,
+				sort: sort,
+			})}`;
+		},
+		async (url) => {
+			const { data } = await fetchWithZod(GalleriesSchema, url);
 
-	const filteredGalleries = galleries.filter((gallery) =>
-		gallery.title.toLowerCase().includes(searchQuery.toLowerCase())
+			return data;
+		},
+		{
+			revalidateOnFocus: false,
+			keepPreviousData: true,
+		}
 	);
-
-	const visibleGalleries = filteredGalleries.slice(0, displayCount);
-	const hasMore = displayCount < filteredGalleries.length;
-
-	const handleLoadMore = () => {
-		setLoading(true);
-		setTimeout(() => {
-			setDisplayCount((prev) => Math.min(prev + 6, filteredGalleries.length));
-			setLoading(false);
-		}, 800);
-	};
-
-	if (filteredGalleries.length === 0) {
-		return <EmptyState />;
-	}
 
 	return (
 		<>
-			<div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>
-				{visibleGalleries.map((gallery) => (
-					<GalleryCard key={gallery.id} gallery={gallery} />
-				))}
-			</div>
+			{size === 1 && galleries?.[0]?.length === 0 ? (
+				<EmptyState />
+			) : (
+				<div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>
+					{galleries?.map((page) => (
+						<>
+							{page.map((gallery) => (
+								<GalleryCard key={gallery.documentId} gallery={gallery} />
+							))}
+						</>
+					))}
+				</div>
+			)}
 
-			{loading && <LoadingSpinner />}
+			{isLoading || isValidating && <LoadingSpinner />}
 
 			<SeeMoreButton
-				onClick={handleLoadMore}
-				loading={loading}
-				hasMore={hasMore}
+				onClick={() => setSize(size + 1)}
+				loading={isLoading || isValidating}
+				hasMore={galleries?.[size - 1]?.length !== 0}
 			/>
 		</>
 	);

@@ -66,8 +66,6 @@ const LocaleLayout = async ({
 	setRequestLocale(locale);
 	const messages = await getMessages();
 
-	console.log('Locale', locale);
-
 	return (
 		<html lang='en' className='scroll-smooth' suppressHydrationWarning>
 			<head>

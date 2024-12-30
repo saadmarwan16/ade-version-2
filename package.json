@@ -25,6 +25,7 @@
 		"react-medium-image-zoom": "^5.1.10",
 		"sharp": "^0.33.2",
 		"swiper": "^11.0.6",
+		"swr": "^2.3.0",
 		"zod": "^3.24.1",
 		"zod-fetch": "^0.1.1",
 		"zod-form-data": "^2.0.4"

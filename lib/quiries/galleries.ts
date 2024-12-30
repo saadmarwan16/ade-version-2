@@ -1,7 +1,9 @@
+import { Locale } from '@/i18n/routing';
 import qs from 'qs';
+import { GallerySortSchema } from '../types/galleries';
 
 interface GalleryProps {
-	locale?: string;
+	locale?: Locale;
 	page?: number;
 	sort?: string;
 	search?: string;
@@ -12,8 +14,10 @@ export const galleriesQuery = ({
 	page = 1,
 	sort = 'createdAt:desc',
 	search,
-}: GalleryProps) =>
-	qs.stringify(
+}: GalleryProps) => {
+	const parsedSort = GallerySortSchema.safeParse(sort);
+
+	return qs.stringify(
 		{
 			filters: search
 				? {
@@ -22,8 +26,7 @@ export const galleriesQuery = ({
 						},
 					}
 				: undefined,
-			sort: [sort],
-			// sort: ['createdAt:desc', 'title:asc'],
+			sort: parsedSort.success ? [parsedSort.data] : undefined,
 			populate: {
 				thumbnail: {
 					fields: ['url'],
@@ -41,3 +44,4 @@ export const galleriesQuery = ({
 		},
 		{ encodeValuesOnly: true }
 	);
+};
