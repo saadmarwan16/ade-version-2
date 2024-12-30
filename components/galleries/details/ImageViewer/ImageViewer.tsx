@@ -16,9 +16,11 @@ import 'swiper/css/pagination';
 import 'swiper/css/virtual';
 import 'react-medium-image-zoom/dist/styles.css';
 import Image from 'next/image';
+import { constructImageLink } from '@/lib/contructImageLink';
+import { TImageWithDimensions } from '@/lib/types/gallery_details';
 
 interface ImageViewerProps {
-	images: string[];
+	images: TImageWithDimensions[];
 	initialIndex?: number;
 	onClose: () => void;
 }
@@ -88,7 +90,9 @@ export function ImageViewer({
 								<div className='relative flex h-full w-full items-center justify-center'>
 									<Zoom>
 										<Image
-											src={image}
+											src={constructImageLink(image.url)}
+											width={image.width}
+											height={image.height}
 											alt={`Gallery image ${index + 1}`}
 											className='h-auto max-h-[calc(100vh-180px)] w-auto max-w-full object-contain'
 											loading={
@@ -135,7 +139,7 @@ export function ImageViewer({
 				{/* Thumbnails */}
 				<div className='h-20 bg-black/50 backdrop-blur-sm'>
 					<ViewerThumbnails
-						images={images}
+						images={images.map((image) => constructImageLink(image.url))}
 						currentIndex={currentIndex}
 						onSelect={(index) => swiperRef.current?.slideTo(index)}
 					/>

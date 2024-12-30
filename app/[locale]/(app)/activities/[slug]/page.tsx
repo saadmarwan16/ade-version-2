@@ -7,38 +7,45 @@ import { ImageCarousel } from '@/components/activities/carousel/ImageCarousel';
 import Image from 'next/image';
 import { FunctionComponent } from 'react';
 import { getTranslations } from 'next-intl/server';
+import { fetchWithZod } from '@/lib/fetchWithZod';
+import { ActivityDetailsSchema } from '@/lib/types/activity_details';
+import { env } from '@/env';
+import { activityDetailsQuery } from '@/lib/quiries/activity_details';
+import { constructImageLink } from '@/lib/contructImageLink';
+import { Locale } from '@/i18n/routing';
+import dayjs from 'dayjs';
+import { typeColors } from '@/utils/constants/typeColors';
 
 interface ActivityDetailsPageProps {
 	params: {
-		id: string;
+		locale: Locale;
+		slug: string;
 	};
 }
 
 export const generateStaticParams = () => {
-	return activities.map((activity) => ({ id: activity.id.toString() }));
+	return activities.map((activity) => ({ slug: activity.id.toString() }));
 };
 
-const ActivityDetailsPage: FunctionComponent<ActivityDetailsPageProps> = async ({
-	params: { id },
-}) => {
+const ActivityDetailsPage: FunctionComponent<
+	ActivityDetailsPageProps
+> = async ({ params: { locale, slug } }) => {
 	const t = await getTranslations();
-	const activity = activities.find((a) => a.id === Number(id));
-
-	if (!activity) {
-		return (
-			<div className='flex min-h-screen items-center justify-center'>
-				<p className='text-gray-600'>{t('NotFoundPage.not-found')}</p>
-			</div>
-		);
-	}
+	const { data: activity } = await fetchWithZod(
+		ActivityDetailsSchema,
+		`${env.NEXT_PUBLIC_API_URL}/activities/${slug}?${activityDetailsQuery(locale)}`
+	);
+	const related_activities = activity.related.filter(
+		(a) => a.id !== activity.id
+	);
 
 	return (
 		<div className='min-h-screen bg-gray-50'>
 			{/* Hero Section */}
 			<div className='relative h-[60vh] bg-gray-900'>
 				<Image
-					src={activity.image}
-					alt={activity.title}
+					src={constructImageLink(activity.thumbnail.url)}
+					alt={`Thumnail of ${activity.title}`}
 					className='h-full w-full object-cover opacity-50'
 					fill
 					sizes='100vw'
@@ -48,14 +55,18 @@ const ActivityDetailsPage: FunctionComponent<ActivityDetailsPageProps> = async (
 				<div className='absolute bottom-0 left-0 right-0 p-8'>
 					<div className='mx-auto max-w-7xl'>
 						<div className='mb-4 hidden flex-wrap items-center gap-4 sm:flex'>
-							<span
-								className={`rounded-md px-4 py-1.5 text-sm font-medium ${activity.categoryColor}`}
-							>
-								{activity.category}
-							</span>
+							{activity.activity_categories.map((category) => (
+								<span
+									className={`rounded-md px-4 py-1.5 text-sm font-medium ${
+										typeColors[category.color as keyof typeof typeColors]
+									}`}
+								>
+									{category.title}
+								</span>
+							))}
 							<div className='flex items-center text-sm text-gray-300'>
 								<Calendar className='mr-2 h-4 w-4' />
-								{activity.date}
+								{dayjs(activity.date).locale(locale).format('MMMM DD, YYYY')}
 							</div>
 						</div>
 
@@ -72,28 +83,34 @@ const ActivityDetailsPage: FunctionComponent<ActivityDetailsPageProps> = async (
 					{/* Main Content */}
 					<div className='lg:col-span-2'>
 						<div className='mb-6 flex flex-wrap items-center gap-4 sm:hidden'>
-							<span
-								className={`rounded-md px-4 py-1.5 text-sm font-medium ${activity.categoryColor}`}
-							>
-								{activity.category}
-							</span>
+							{activity.activity_categories.map((category) => (
+								<span
+									className={`rounded-md px-4 py-1.5 text-sm font-medium ${
+										typeColors[category.color as keyof typeof typeColors]
+									}`}
+								>
+									{category.title}
+								</span>
+							))}
 							<div className='flex items-center gap-2 text-sm text-gray-600'>
 								<Calendar className='h-4 w-4 text-indigo-600' />
-								{activity.date}
+								{dayjs(activity.date).locale(locale).format('MMMM DD, YYYY')}
 							</div>
 						</div>
 
 						<div className='flex flex-col gap-8 rounded-xl bg-white shadow-sm sm:gap-10 md:gap-12'>
-							{activity.gallery && (
+							{activity.images.length > 0 && (
 								<div className='overflow-hidden rounded-t-xl'>
 									<ImageCarousel
-										images={activity.gallery}
+										images={activity.images.map((image) =>
+											constructImageLink(image.url)
+										)}
 										title={activity.title}
 									/>
 								</div>
 							)}
 							<div className='p-8'>
-								<ActivityContent activity={activity} />
+								<ActivityContent body={activity.body} />
 							</div>
 						</div>
 					</div>
@@ -107,15 +124,17 @@ const ActivityDetailsPage: FunctionComponent<ActivityDetailsPageProps> = async (
 							<ActivityShare />
 						</div>
 
-						<div className='rounded-xl bg-white p-6 shadow-sm'>
-							<h3 className='mb-4 text-lg font-semibold text-gray-900'>
-								{t('ActivityDetailsPage.related-activities-title')}
-							</h3>
-							<RelatedActivities
-								currentId={activity.id}
-								category={activity.category}
-							/>
-						</div>
+						{related_activities.length > 0 && (
+							<div className='rounded-xl bg-white p-6 shadow-sm'>
+								<h3 className='mb-4 text-lg font-semibold text-gray-900'>
+									{t('ActivityDetailsPage.related-activities-title')}
+								</h3>
+								<RelatedActivities
+									locale={locale}
+									activities={related_activities}
+								/>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>

@@ -1,41 +1,52 @@
 import { galleries } from '@/components/galleries/data';
 import { GalleryMasonry } from '@/components/galleries/details/GalleryMasonry';
 import { GalleryShare } from '@/components/galleries/details/GalleryShare';
+import { env } from '@/env';
+import { Locale } from '@/i18n/routing';
+import { constructImageLink } from '@/lib/contructImageLink';
+import { fetchWithZod } from '@/lib/fetchWithZod';
+import { galleryDetailsQuery } from '@/lib/quiries/gallery_details';
+import { GalleryDetailsSchema } from '@/lib/types/gallery_details';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import { FunctionComponent } from 'react';
 
 interface GalleryDetailsPageProps {
 	params: {
-		id: string;
+		locale: Locale;
+		slug: string;
 	};
 }
 
 export const generateStaticParams = () => {
-	return galleries.map((gallery) => ({ id: gallery.id.toString() }));
+	return galleries.map((gallery) => ({ slug: gallery.id.toString() }));
 };
 
 const GalleryDetailsPage: FunctionComponent<GalleryDetailsPageProps> = async ({
-	params: { id },
+	params: { locale, slug },
 }) => {
 	const t = await getTranslations();
-	const gallery = galleries.find((g) => g.id === Number(id));
+	const { data: gallery } = await fetchWithZod(
+		GalleryDetailsSchema,
+		`${env.NEXT_PUBLIC_API_URL}/galleries/${slug}?${galleryDetailsQuery(locale)}`
+	);
+	// const gallery = galleries.find((g) => g.id === Number(id));
 
-	if (!gallery) {
-		return (
-			<div className='flex min-h-screen items-center justify-center'>
-				<p className='text-gray-600'>{t('NotFoundPage.not-found')}</p>
-			</div>
-		);
-	}
+	// if (!gallery) {
+	// 	return (
+	// 		<div className='flex min-h-screen items-center justify-center'>
+	// 			<p className='text-gray-600'>{t('NotFoundPage.not-found')}</p>
+	// 		</div>
+	// 	);
+	// }
 
 	return (
 		<div className='min-h-screen overflow-x-hidden bg-gray-50'>
 			{/* Hero Section */}
 			<div className='relative h-[60vh] bg-gray-900'>
 				<Image
-					src={gallery.coverImage}
-					alt={gallery.title}
+					src={constructImageLink(gallery.thumbnail.url)}
+					alt={`Thumnail of ${gallery.title}`}
 					className='h-full w-full object-cover opacity-50'
 					fill
 					sizes='100vw'
@@ -59,7 +70,7 @@ const GalleryDetailsPage: FunctionComponent<GalleryDetailsPageProps> = async ({
 			{/* Content Section */}
 			<div className='mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8'>
 				<div className='overflow-hidden rounded-xl bg-white shadow-sm'>
-					<GalleryMasonry images={gallery.images || []} />
+					<GalleryMasonry images={gallery.images} />
 				</div>
 			</div>
 		</div>

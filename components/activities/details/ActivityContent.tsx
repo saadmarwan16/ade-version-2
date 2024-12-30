@@ -1,56 +1,93 @@
-import { Activity } from '../types';
+'use client';
+
+import { BlocksRenderer } from '@strapi/blocks-react-renderer';
+import { TActivityDetailsBody } from '@/lib/types/activity_details';
 
 interface ActivityContentProps {
-	activity: Activity;
+	body: TActivityDetailsBody;
 }
 
-export function ActivityContent({ activity }: ActivityContentProps) {
+export function ActivityContent({ body }: ActivityContentProps) {
 	return (
-		<div className='prose prose-lg max-w-none'>
-			{activity.content && (
-				<div
-					dangerouslySetInnerHTML={{ __html: activity.content }}
-					className='mb-12'
+		<div className='my-6 md:my-8 lg:my-10 lg:flex lg:justify-center'>
+			<div className='w-full max-w-4xl'>
+				<BlocksRenderer
+					content={body}
+					blocks={{
+						paragraph: ({ children }) => (
+							<p className='text-justify text-base md:text-lg lg:text-xl xl:text-2xl'>
+								{children}
+							</p>
+						),
+						heading: ({ children, level }) => {
+							switch (level) {
+								case 1:
+									return (
+										<h1 className='text-4xl font-medium md:text-5xl lg:text-6xl'>
+											{children}
+										</h1>
+									);
+								case 2:
+									return (
+										<h2 className='text-3xl font-medium md:text-4xl lg:text-5xl'>
+											{children}
+										</h2>
+									);
+								case 3:
+									return (
+										<h3 className='text-2xl font-medium md:text-3xl lg:text-4xl'>
+											{children}
+										</h3>
+									);
+								case 4:
+									return (
+										<h4 className='text-xl font-medium md:text-2xl lg:text-3xl'>
+											{children}
+										</h4>
+									);
+								case 5:
+									return (
+										<h5 className='text-lg font-medium md:text-xl lg:text-2xl'>
+											{children}
+										</h5>
+									);
+								case 6:
+									return (
+										<h6 className='text-base font-medium md:text-lg lg:text-xl'>
+											{children}
+										</h6>
+									);
+								default:
+									return (
+										<p className='text-base md:text-lg lg:text-xl xl:text-2xl'>
+											{children}
+										</p>
+									);
+							}
+						},
+						link: ({ children, url }) => (
+							<a href={url} target='_blank' className='text-blue-700 underline'>
+								{children}
+							</a>
+						),
+						list: ({ children, format }) => {
+							if (format === 'ordered') {
+								return (
+									<ol className='revert-tailwind text-base md:text-lg lg:text-xl'>
+										{children}
+									</ol>
+								);
+							} else {
+								return (
+									<ul className='revert-tailwind text-base md:text-lg lg:text-xl'>
+										{children}
+									</ul>
+								);
+							}
+						},
+					}}
 				/>
-			)}
-
-			{/* Objectives Section */}
-			{activity.objectives && (
-				<div className='mb-12'>
-					<h2 className='mb-6 text-2xl font-semibold text-gray-900'>
-						Key Objectives
-					</h2>
-					<ul className='space-y-4'>
-						{activity.objectives.map((objective, index) => (
-							<li key={index} className='flex items-start gap-4'>
-								<span className='flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-indigo-50 text-sm font-medium text-indigo-600'>
-									{index + 1}
-								</span>
-								<span className='text-gray-700'>{objective}</span>
-							</li>
-						))}
-					</ul>
-				</div>
-			)}
-
-			{/* Outcomes Section */}
-			{activity.outcomes && (
-				<div>
-					<h2 className='mb-6 text-2xl font-semibold text-gray-900'>
-						Key Outcomes
-					</h2>
-					<ul className='space-y-4'>
-						{activity.outcomes.map((outcome, index) => (
-							<li key={index} className='flex items-start gap-4'>
-								<span className='flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-emerald-50 text-sm font-medium text-emerald-600'>
-									✓
-								</span>
-								<span className='text-gray-700'>{outcome}</span>
-							</li>
-						))}
-					</ul>
-				</div>
-			)}
+			</div>
 		</div>
 	);
 }

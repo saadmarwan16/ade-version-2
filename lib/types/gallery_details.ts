@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ImageSchema } from './shared';
 
 export const ImageWithDimensionsSchema = z.object({
 	id: z.number(),
@@ -13,6 +14,7 @@ export const GalleryDetailsDataSchema = z.object({
 	documentId: z.string(),
 	title: z.string(),
 	images: z.array(ImageWithDimensionsSchema),
+	thumbnail: ImageSchema
 });
 
 export const GalleryDetailsSchema = z.object({

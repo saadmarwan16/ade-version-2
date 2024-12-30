@@ -1,17 +1,22 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, FunctionComponent } from 'react';
 import Image from 'next/image';
 import { useInView } from 'react-intersection-observer';
 import Skeleton from 'react-loading-skeleton';
 import { ImageViewer } from './ImageViewer/ImageViewer';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { TImageWithDimensions } from '@/lib/types/gallery_details';
+import { constructImageLink } from '@/lib/contructImageLink';
 
 interface GalleryMasonryProps {
-	images: string[];
+	images: TImageWithDimensions[];
 }
 
-function LazyImage({ src, index }: { src: string; index: number }) {
+const LazyImage: FunctionComponent<{ src: string; index: number }> = ({
+	src,
+	index,
+}) => {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const { ref, inView } = useInView({
 		triggerOnce: true,
@@ -40,9 +45,11 @@ function LazyImage({ src, index }: { src: string; index: number }) {
 			)}
 		</div>
 	);
-}
+};
 
-export function GalleryMasonry({ images }: GalleryMasonryProps) {
+export const GalleryMasonry: FunctionComponent<GalleryMasonryProps> = ({
+	images,
+}) => {
 	const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
 		null
 	);
@@ -81,7 +88,10 @@ export function GalleryMasonry({ images }: GalleryMasonryProps) {
 									className='group relative w-full cursor-zoom-in'
 								>
 									<div className='absolute inset-0 z-10 rounded-lg bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
-									<LazyImage src={image} index={index} />
+									<LazyImage
+										src={constructImageLink(image.url)}
+										index={index}
+									/>
 								</button>
 							))}
 						</div>
@@ -98,7 +108,7 @@ export function GalleryMasonry({ images }: GalleryMasonryProps) {
 			)}
 		</>
 	);
-}
+};
 
 // Utility function for debouncing resize events
 function debounce(fn: Function, ms: number) {
