@@ -28,7 +28,7 @@ const HomePage: FunctionComponent<HomePageProps> = async ({
 
 	return (
 		<main>
-			<Hero />
+			<Hero locale={locale} />
 			{data.projects.length > 0 && <Projects projects={data.projects} />}
 			{data.partners.length > 0 && <Partners partners={data.partners} />}
 			{data.activities.length > 0 && (

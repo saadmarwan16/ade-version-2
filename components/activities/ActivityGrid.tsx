@@ -1,116 +1,146 @@
 'use client';
 
-import { useState, useCallback, FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import Image from 'next/image';
 import { Calendar, ArrowRight } from 'lucide-react';
-import { activities } from './data';
-import { EmptyState } from './EmptyState';
 import { LoadingSpinner } from './LoadingSpinner';
 import { SeeMoreButton } from './SeeMoreButton';
 import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/routing';
+import { Link, Locale } from '@/i18n/routing';
+import useSWRInfinite from 'swr/infinite';
+import { env } from '@/env';
+import { activitiesQuery } from '@/lib/quiries/activities';
+import { fetchWithZod } from '@/lib/fetchWithZod';
+import { ActivitiesSchema } from '@/lib/types/activities';
+import { constructImageLink } from '@/lib/contructImageLink';
+import { typeColors } from '@/utils/constants/typeColors';
+import { EmptyState } from './EmptyState';
 
 interface ActivityGridProps {
-	filter: string;
-	searchQuery: string;
+	locale: Locale;
+	query?: string;
+	sort?: string;
+	category?: string;
 }
 
 export const ActivityGrid: FunctionComponent<ActivityGridProps> = ({
-	filter,
-	searchQuery,
+	locale,
+	query,
+	sort,
+	category,
 }) => {
-	const [loading, setLoading] = useState(false);
-	const [displayCount, setDisplayCount] = useState(6);
 	const t = useTranslations();
+	const {
+		data: activities,
+		size,
+		setSize,
+		isLoading,
+		isValidating,
+	} = useSWRInfinite(
+		(pageIdx) => {
+			return `${env.NEXT_PUBLIC_API_URL}/activities?${activitiesQuery({
+				locale: locale,
+				page: pageIdx + 1,
+				search: query,
+				sort: sort,
+				category: category,
+			})}`;
+		},
+		async (url) => {
+			const { data } = await fetchWithZod(ActivitiesSchema, url);
 
-	const filteredActivities = activities.filter((activity) => {
-		const matchesFilter = filter === 'All' || activity.category === filter;
-		const matchesSearch = activity.title
-			.toLowerCase()
-			.includes(searchQuery.toLowerCase());
-		return matchesFilter && matchesSearch;
-	});
-
-	const visibleActivities = filteredActivities.slice(0, displayCount);
-	const hasMore = displayCount < filteredActivities.length;
-
-	const handleLoadMore = useCallback(() => {
-		setLoading(true);
-		setTimeout(() => {
-			setDisplayCount((prev) => Math.min(prev + 6, filteredActivities.length));
-			setLoading(false);
-		}, 800);
-	}, [filteredActivities.length]);
-
-	if (filteredActivities.length === 0) {
-		return (
-			<EmptyState filter={filter} onReset={() => window.location.reload()} />
-		);
-	}
+			return data;
+		},
+		{
+			revalidateOnFocus: false,
+			keepPreviousData: true,
+		}
+	);
 
 	return (
 		<>
-			<div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>
-				{visibleActivities.map((activity) => (
-					<Link
-						key={activity.id}
-						href={{
-							pathname: '/activities/[slug]',
-							params: {
-								slug: activity.id.toString(),
-							},
-						}}
-						className='block h-full'
-					>
-						<div className='group flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all duration-300 hover:shadow-lg'>
-							<div className='relative aspect-video overflow-hidden'>
-								<div className='absolute inset-0 z-10 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
-								<Image
-									src={activity.image}
-									alt={activity.title}
-									width={800}
-									height={450}
-									className='h-full w-full transform object-cover transition-transform duration-500 group-hover:scale-105'
-								/>
-							</div>
+			{size === 1 && activities?.[0]?.length === 0 ? (
+				<EmptyState
+					locale={locale}
+					searchParams={{
+						query: query,
+						sort: sort,
+						category: category,
+					}}
+				/>
+			) : (
+				<div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>
+					{activities?.map((page) => (
+						<>
+							{page.map((activity) => (
+								<Link
+									key={activity.documentId}
+									href={{
+										pathname: '/activities/[slug]',
+										params: {
+											slug: activity.slug,
+										},
+									}}
+									className='block h-full'
+								>
+									<div className='group flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all duration-300 hover:shadow-lg'>
+										<div className='relative aspect-video overflow-hidden'>
+											<div className='absolute inset-0 z-10 bg-gradient-to-br from-indigo-600/20 to-purple-600/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100' />
+											<Image
+												src={constructImageLink(activity.thumbnail.url)}
+												alt={activity.title}
+												width={800}
+												height={450}
+												className='h-full w-full transform object-cover transition-transform duration-500 group-hover:scale-105'
+											/>
+										</div>
 
-							<div className='flex flex-grow flex-col p-6'>
-								<div className='mb-4 flex items-center gap-3'>
-									<span
-										className={`rounded-md px-3 py-1 text-sm font-medium ${
-											activity.categoryColor
-										}`}
-									>
-										{activity.category}
-									</span>
-									<div className='flex items-center text-sm text-gray-500'>
-										<Calendar className='mr-1 h-4 w-4' />
-										{activity.date}
+										<div className='flex flex-grow flex-col p-6'>
+											<div className='mb-4 flex items-center gap-3'>
+												{activity.activity_categories.map((category) => (
+													<span
+														key={category.documentId}
+														className={`rounded-md px-3 py-1 text-sm font-medium ${
+															typeColors[
+																category.color as keyof typeof typeColors
+															]
+														}`}
+													>
+														{category.title}
+													</span>
+												))}
+
+												<div className='flex items-center text-sm text-gray-500'>
+													<Calendar className='mr-1 h-4 w-4' />
+													{activity.date}
+												</div>
+											</div>
+
+											<h3 className='mb-4 line-clamp-2 text-xl font-semibold text-gray-900'>
+												{activity.title}
+											</h3>
+
+											<div className='mt-auto'>
+												<span className='inline-flex items-center gap-2 font-medium text-indigo-600 group-hover:text-indigo-700'>
+													{t('ActivitiesPage.read-more-button')}
+													<ArrowRight className='h-4 w-4 transition-transform group-hover:translate-x-1' />
+												</span>
+											</div>
+										</div>
 									</div>
-								</div>
+								</Link>
+							))}
+						</>
+					))}
+				</div>
+			)}
 
-								<h3 className='mb-4 line-clamp-2 text-xl font-semibold text-gray-900'>
-									{activity.title}
-								</h3>
-
-								<div className='mt-auto'>
-									<span className='inline-flex items-center gap-2 font-medium text-indigo-600 group-hover:text-indigo-700'>
-										{t('ActivitiesPage.read-more-button')}
-										<ArrowRight className='h-4 w-4 transition-transform group-hover:translate-x-1' />
-									</span>
-								</div>
-							</div>
-						</div>
-					</Link>
-				))}
-			</div>
-
-			{loading && <LoadingSpinner />}
+			{isLoading || (isValidating && <LoadingSpinner />)}
 
 			<SeeMoreButton
-				onClick={handleLoadMore}
-				loading={loading}
-				hasMore={hasMore}
+				onClick={() => setSize(size + 1)}
+				loading={isLoading || isValidating}
+				hasMore={activities?.[size - 1]?.length !== 0}
 			/>
 		</>
 	);

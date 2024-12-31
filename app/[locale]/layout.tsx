@@ -9,6 +9,10 @@ import { Locale, routing } from '@/i18n/routing';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
 import { PropsWithChildren } from 'react';
+import { fetchWithZod } from '@/lib/fetchWithZod';
+import { MetaSchema } from '@/lib/types/meta';
+import { env } from '@/env';
+import { metaQuery } from '@/lib/quiries/meta';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -65,6 +69,10 @@ const LocaleLayout = async ({
 
 	setRequestLocale(locale);
 	const messages = await getMessages();
+	const { data } = await fetchWithZod(
+		MetaSchema,
+		`${env.NEXT_PUBLIC_API_URL}/meta?${metaQuery(locale)}`
+	);
 
 	return (
 		<html lang='en' className='scroll-smooth' suppressHydrationWarning>
@@ -79,10 +87,10 @@ const LocaleLayout = async ({
 				<NextIntlClientProvider messages={messages}>
 					<Providers>
 						<div className='min-h-screen bg-white'>
-							<Navbar locale={locale} />
+							<Navbar locale={locale} logo={data.logo.url} />
 							{children}
-							<Footer />
-							<WhatsAppButton />
+							<Footer meta={data} />
+							<WhatsAppButton whatsapp={data.whatsapp} />
 						</div>
 					</Providers>
 				</NextIntlClientProvider>

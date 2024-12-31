@@ -1,16 +1,35 @@
-'use client';
-
-import { useState } from 'react';
-import { Search, Activity, Briefcase } from 'lucide-react';
+import { FunctionComponent } from 'react';
+import { Activity, Briefcase } from 'lucide-react';
 import { ActivityFilters } from '@/components/activities/ActivityFilters';
 import { ActivityGrid } from '@/components/activities/ActivityGrid';
 import { ActivitySort } from '@/components/activities/ActivitySort';
-import { useTranslations } from 'next-intl';
+import { Locale } from '@/i18n/routing';
+import { ActivitySearch } from '@/components/activities/ActivitySearch';
+import { getTranslations } from 'next-intl/server';
+import { fetchWithZod } from '@/lib/fetchWithZod';
+import { ActivityCategorySchema } from '@/lib/types/activity_category';
+import { env } from '@/env';
 
-export default function AllActivities() {
-	const [searchQuery, setSearchQuery] = useState('');
-	const [activeFilter, setActiveFilter] = useState('All');
-	const t = useTranslations();
+interface ActivitiesPageProps {
+	params: {
+		locale: Locale;
+	};
+	searchParams: {
+		query?: string;
+		sort?: string;
+		category?: string;
+	};
+}
+
+const ActivitiesPage: FunctionComponent<ActivitiesPageProps> = async ({
+	params: { locale },
+	searchParams,
+}) => {
+	const t = await getTranslations();
+	const { data } = await fetchWithZod(
+		ActivityCategorySchema,
+		`${env.NEXT_PUBLIC_API_URL}/activity-categories?locale=${locale}`
+	);
 
 	return (
 		<div className='min-h-screen'>
@@ -36,12 +55,16 @@ export default function AllActivities() {
 						<div className='w-full max-w-xs rounded-xl bg-white/10 p-8 text-center backdrop-blur-sm'>
 							<Activity className='mx-auto mb-4 h-10 w-10 text-indigo-200' />
 							<div className='mb-2 text-3xl font-bold text-white'>150+</div>
-							<div className='text-lg text-indigo-200'>{t('ActivitiesPage.activities')}</div>
+							<div className='text-lg text-indigo-200'>
+								{t('ActivitiesPage.activities')}
+							</div>
 						</div>
 						<div className='w-full max-w-xs rounded-xl bg-white/10 p-8 text-center backdrop-blur-sm'>
 							<Briefcase className='mx-auto mb-4 h-10 w-10 text-indigo-200' />
 							<div className='mb-2 text-3xl font-bold text-white'>25+</div>
-							<div className='text-lg text-indigo-200'>{t('ActivitiesPage.projects')}</div>
+							<div className='text-lg text-indigo-200'>
+								{t('ActivitiesPage.projects')}
+							</div>
 						</div>
 					</div>
 				</div>
@@ -52,26 +75,24 @@ export default function AllActivities() {
 				<div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
 					{/* Search and Filter Section */}
 					<div className='mb-8 flex gap-2 sm:gap-3 md:gap-4'>
-						<div className='relative flex-grow'>
-							<Search className='absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400' />
-							<input
-								type='text'
-								placeholder={t('ActivitiesPage.search-placeholder')}
-								value={searchQuery}
-								onChange={(e) => setSearchQuery(e.target.value)}
-								className='w-full rounded-xl border border-gray-200 py-3 pl-10 pr-4 transition-all focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200'
-							/>
-						</div>
-						<ActivitySort />
+						<ActivitySearch searchParams={searchParams} />
+						<ActivitySort searchParams={searchParams} />
 					</div>
 
 					<ActivityFilters
-						activeFilter={activeFilter}
-						onFilterChange={setActiveFilter}
+						searchParams={searchParams}
+						filters={data.map((filter) => filter.title)}
 					/>
-					<ActivityGrid filter={activeFilter} searchQuery={searchQuery} />
+					<ActivityGrid
+						locale={locale}
+						query={searchParams.query}
+						sort={searchParams.sort}
+						category={searchParams.category}
+					/>
 				</div>
 			</div>
 		</div>
 	);
-}
+};
+
+export default ActivitiesPage;

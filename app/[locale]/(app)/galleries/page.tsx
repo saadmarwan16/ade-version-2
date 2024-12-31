@@ -21,7 +21,6 @@ const GalleriesPage: FunctionComponent<GalleryPageProps> = async ({
 	searchParams,
 }) => {
 	const t = await getTranslations();
-	console.log('Search Params:', searchParams);
 
 	return (
 		<div className='min-h-screen'>

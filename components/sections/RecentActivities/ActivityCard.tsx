@@ -44,6 +44,7 @@ export const ActivityCard: FunctionComponent<ActivityCardProps> = ({
 					<div className='mb-4 flex items-center gap-3'>
 						{activity.activity_categories.map((category) => (
 							<span
+								key={category.documentId}
 								className={`rounded-md px-3 py-1 text-sm font-medium ${
 									typeColors[category.color as keyof typeof typeColors]
 								}`}

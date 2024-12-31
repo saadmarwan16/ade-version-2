@@ -1,8 +1,14 @@
 import { HeroBackground } from './HeroBackground';
 import { HeroContent } from './HeroContent';
 import Image from 'next/image';
+import { Locale } from '@/i18n/routing';
+import { FunctionComponent } from 'react';
 
-export const Hero = () => {
+interface HeroProps {
+	locale: Locale;
+}
+
+export const Hero: FunctionComponent<HeroProps> = async ({ locale }) => {
 	return (
 		<section className='relative min-h-screen overflow-hidden bg-gradient-to-br from-gray-900 via-indigo-900 to-purple-900'>
 			{/* Background image with overlay */}
@@ -20,8 +26,8 @@ export const Hero = () => {
 
 			<div className='relative z-10 mx-auto max-w-7xl px-4 pt-20 sm:px-6 lg:px-8'>
 				<HeroBackground />
-				<HeroContent />
+				<HeroContent locale={locale} />
 			</div>
 		</section>
 	);
-}
+};

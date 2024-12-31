@@ -10,9 +10,10 @@ import { getNavLinks } from '@/utils/constants/navLinks';
 
 interface NavbarProps {
 	locale: Locale;
+	logo: string;
 }
 
-export const Navbar: FunctionComponent<NavbarProps> = ({ locale }) => {
+export const Navbar: FunctionComponent<NavbarProps> = ({ logo, locale }) => {
 	const pathname = usePathname();
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement>(null);
@@ -61,7 +62,7 @@ export const Navbar: FunctionComponent<NavbarProps> = ({ locale }) => {
 							href='/'
 							className='flex items-center gap-3 transition hover:scale-105 hover:cursor-pointer'
 						>
-							<Avatar size='md' />
+							<Avatar logo={logo} />
 							<span className='bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-2xl font-bold text-transparent lg:text-3xl'>
 								ADEBAYO
 							</span>

@@ -1,11 +1,18 @@
+import { constructImageLink } from '@/lib/contructImageLink';
 import Image from 'next/image';
+import { FunctionComponent } from 'react';
 
 interface AvatarProps {
+	logo: string;
 	className?: string;
 	size?: 'sm' | 'md' | 'lg';
 }
 
-export function Avatar({ className = '', size = 'md' }: AvatarProps) {
+export const Avatar: FunctionComponent<AvatarProps> = ({
+	logo,
+	className = '',
+	size = 'md',
+}) => {
 	const sizes = {
 		sm: 'w-10 h-10',
 		md: 'w-12 h-12',
@@ -17,7 +24,7 @@ export function Avatar({ className = '', size = 'md' }: AvatarProps) {
 			className={`relative flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 text-white ${sizes[size]} ${className}`}
 		>
 			<Image
-				src='/profile.jpeg'
+				src={constructImageLink(logo)}
 				alt='Adébayo Ademon'
 				width={64}
 				height={64}
@@ -25,4 +32,4 @@ export function Avatar({ className = '', size = 'md' }: AvatarProps) {
 			/>
 		</div>
 	);
-}
+};

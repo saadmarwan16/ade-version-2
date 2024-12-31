@@ -1,36 +1,27 @@
-import { Linkedin, Twitter, Instagram, Facebook } from 'lucide-react';
+import { getContactSocialLinks } from '@/utils/constants/socialLinks';
 import { useTranslations } from 'next-intl';
 import { FunctionComponent } from 'react';
 
-const socialLinks = [
-	{
-		icon: Linkedin,
-		label: 'LinkedIn',
-		href: 'https://linkedin.com/in/adebayoademon',
-		color: 'hover:bg-[#0077b5] hover:border-[#0077b5]',
-	},
-	{
-		icon: Twitter,
-		label: 'Twitter',
-		href: 'https://twitter.com/adebayoademon',
-		color: 'hover:bg-[#1DA1F2] hover:border-[#1DA1F2]',
-	},
-	{
-		icon: Instagram,
-		label: 'Instagram',
-		href: 'https://instagram.com/adebayoademon',
-		color: 'hover:bg-[#E4405F] hover:border-[#E4405F]',
-	},
-	{
-		icon: Facebook,
-		label: 'Facebook',
-		href: 'https://facebook.com/adebayoademon',
-		color: 'hover:bg-[#0077b5] hover:border-[#0077b5]',
-	},
-];
+interface SocialLinksProps {
+	instagram: string;
+	linkedin: string;
+	twitter: string;
+	facebook: string;
+}
 
-export const SocialLinks: FunctionComponent = () => {
+export const SocialLinks: FunctionComponent<SocialLinksProps> = ({
+	instagram,
+	linkedin,
+	twitter,
+	facebook,
+}) => {
 	const t = useTranslations();
+	const socialLinks = getContactSocialLinks({
+		instagram,
+		linkedin,
+		twitter,
+		facebook,
+	});
 
 	return (
 		<div className='space-y-8'>

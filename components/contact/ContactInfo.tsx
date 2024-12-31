@@ -1,9 +1,27 @@
 import { getContactDetails } from '@/utils/constants/contactDetails';
 import { useTranslations } from 'next-intl';
+import { FunctionComponent } from 'react';
 
-export const ContactInfo = () => {
+interface ContactInfoProps {
+	phone: string;
+	whatsapp: string;
+	email: string;
+	location: string;
+}
+
+export const ContactInfo: FunctionComponent<ContactInfoProps> = ({
+	phone,
+	whatsapp,
+	email,
+	location,
+}) => {
 	const t = useTranslations();
-	const contactDetails = getContactDetails();
+	const contactDetails = getContactDetails({
+		phone,
+		whatsapp,
+		email,
+		location,
+	});
 
 	return (
 		<div className='space-y-8'>
