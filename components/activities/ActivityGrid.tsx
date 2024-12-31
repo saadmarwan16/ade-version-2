@@ -15,6 +15,7 @@ import { ActivitiesSchema } from '@/lib/types/activities';
 import { constructImageLink } from '@/lib/contructImageLink';
 import { typeColors } from '@/utils/constants/typeColors';
 import { EmptyState } from './EmptyState';
+import dayjs from 'dayjs';
 
 interface ActivityGridProps {
 	locale: Locale;
@@ -112,7 +113,7 @@ export const ActivityGrid: FunctionComponent<ActivityGridProps> = ({
 
 												<div className='flex items-center text-sm text-gray-500'>
 													<Calendar className='mr-1 h-4 w-4' />
-													{activity.date}
+													{dayjs(activity.date).locale(locale).format('MMM DD, YYYY')}
 												</div>
 											</div>
 

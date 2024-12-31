@@ -1,23 +1,26 @@
 'use client';
 
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useEffect, useRef } from 'react';
 import { Send } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useAction } from 'next-safe-action/hooks';
+import { sendMessage } from '@/app/[locale]/(app)/contact/actions';
+import toast from 'react-hot-toast';
 
 export const ContactSection: FunctionComponent = () => {
-	const [formData, setFormData] = useState({
-		name: '',
-		email: '',
-		subject: '',
-		message: '',
-	});
+	const ref = useRef<HTMLFormElement>(null);
+	const { execute, isExecuting, result } = useAction(sendMessage);
 	const t = useTranslations();
 
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
-		// Handle form submission
-		console.log(formData);
-	};
+	useEffect(() => {
+		console.log('Result:', result)
+		const { data, serverError } = result;
+		if (serverError) toast.error(serverError);
+		else if (data === 'Message sent successfully') {
+			ref.current?.reset();
+			toast.success(t('ContactPage.message-send-success'));
+		}
+	}, [result, t]);
 
 	return (
 		<section
@@ -35,25 +38,19 @@ export const ContactSection: FunctionComponent = () => {
 				</div>
 
 				<div className='mx-auto max-w-3xl'>
-					<form onSubmit={handleSubmit} className='space-y-6'>
+					<form ref={ref} action={execute} className='space-y-6'>
 						<div className='grid grid-cols-1 gap-6 sm:grid-cols-2'>
 							<input
 								type='text'
+								name='name'
 								placeholder={t('ContactPage.name')}
-								value={formData.name}
-								onChange={(e) =>
-									setFormData({ ...formData, name: e.target.value })
-								}
 								className='w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-500'
 								required
 							/>
 							<input
 								type='email'
+								name='email'
 								placeholder={t('ContactPage.email')}
-								value={formData.email}
-								onChange={(e) =>
-									setFormData({ ...formData, email: e.target.value })
-								}
 								className='w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-500'
 								required
 							/>
@@ -61,21 +58,15 @@ export const ContactSection: FunctionComponent = () => {
 
 						<input
 							type='text'
+							name='subject'
 							placeholder={t('ContactPage.subject')}
-							value={formData.subject}
-							onChange={(e) =>
-								setFormData({ ...formData, subject: e.target.value })
-							}
 							className='w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-500'
 							required
 						/>
 
 						<textarea
+							name='content'
 							placeholder={t('ContactPage.message')}
-							value={formData.message}
-							onChange={(e) =>
-								setFormData({ ...formData, message: e.target.value })
-							}
 							rows={6}
 							className='w-full resize-none rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-500'
 							required
@@ -84,7 +75,8 @@ export const ContactSection: FunctionComponent = () => {
 						<div className='text-center'>
 							<button
 								type='submit'
-								className='inline-flex items-center gap-2 rounded-xl bg-white px-8 py-4 font-medium text-indigo-600 transition-colors hover:bg-indigo-50'
+								className={`inline-flex items-center gap-2 rounded-xl bg-white px-8 py-4 font-medium text-indigo-600 transition-colors hover:bg-indigo-50 ${isExecuting && 'cursor-not-allowed opacity-50'}`}
+								disabled={isExecuting}
 							>
 								{t('ContactPage.send-message-button')}
 								<Send className='h-5 w-5' />

@@ -13,6 +13,7 @@ import { fetchWithZod } from '@/lib/fetchWithZod';
 import { MetaSchema } from '@/lib/types/meta';
 import { env } from '@/env';
 import { metaQuery } from '@/lib/quiries/meta';
+import { Toaster } from 'react-hot-toast';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -86,6 +87,7 @@ const LocaleLayout = async ({
 			>
 				<NextIntlClientProvider messages={messages}>
 					<Providers>
+						<Toaster />
 						<div className='min-h-screen bg-white'>
 							<Navbar locale={locale} logo={data.logo.url} />
 							{children}

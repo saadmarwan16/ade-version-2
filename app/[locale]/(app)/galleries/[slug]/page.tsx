@@ -1,13 +1,12 @@
 import { galleries } from '@/components/galleries/data';
 import { GalleryMasonry } from '@/components/galleries/details/GalleryMasonry';
-import { GalleryShare } from '@/components/galleries/details/GalleryShare';
 import { env } from '@/env';
 import { Locale } from '@/i18n/routing';
 import { constructImageLink } from '@/lib/contructImageLink';
 import { fetchWithZod } from '@/lib/fetchWithZod';
 import { galleryDetailsQuery } from '@/lib/quiries/gallery_details';
 import { GalleryDetailsSchema } from '@/lib/types/gallery_details';
-import { getTranslations } from 'next-intl/server';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { FunctionComponent } from 'react';
 
@@ -22,23 +21,18 @@ export const generateStaticParams = () => {
 	return galleries.map((gallery) => ({ slug: gallery.id.toString() }));
 };
 
+const GalleryShare = dynamic(
+	() => import('../../../../../components/galleries/details/GalleryShare'),
+	{ ssr: false }
+);
+
 const GalleryDetailsPage: FunctionComponent<GalleryDetailsPageProps> = async ({
 	params: { locale, slug },
 }) => {
-	const t = await getTranslations();
 	const { data: gallery } = await fetchWithZod(
 		GalleryDetailsSchema,
 		`${env.NEXT_PUBLIC_API_URL}/galleries/${slug}?${galleryDetailsQuery(locale)}`
 	);
-	// const gallery = galleries.find((g) => g.id === Number(id));
-
-	// if (!gallery) {
-	// 	return (
-	// 		<div className='flex min-h-screen items-center justify-center'>
-	// 			<p className='text-gray-600'>{t('NotFoundPage.not-found')}</p>
-	// 		</div>
-	// 	);
-	// }
 
 	return (
 		<div className='min-h-screen overflow-x-hidden bg-gray-50'>
@@ -60,7 +54,7 @@ const GalleryDetailsPage: FunctionComponent<GalleryDetailsPageProps> = async ({
 								{gallery.title}
 							</h1>
 							<div className='rounded-xl bg-white/10 p-4 backdrop-blur-sm'>
-								<GalleryShare variant='hero' />
+								<GalleryShare locale={locale} slug={slug} />
 							</div>
 						</div>
 					</div>

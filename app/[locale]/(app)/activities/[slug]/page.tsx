@@ -1,7 +1,10 @@
+import 'dayjs/locale/fr';
+import 'dayjs/locale/tr';
+
+import dynamic from 'next/dynamic';
 import { Calendar } from 'lucide-react';
 import { activities } from '@/components/activities/data';
 import { ActivityContent } from '@/components/activities/details/ActivityContent';
-import { ActivityShare } from '@/components/activities/details/ActivityShare';
 import { RelatedActivities } from '@/components/activities/details/RelatedActivities';
 import { ImageCarousel } from '@/components/activities/carousel/ImageCarousel';
 import Image from 'next/image';
@@ -26,6 +29,11 @@ interface ActivityDetailsPageProps {
 export const generateStaticParams = () => {
 	return activities.map((activity) => ({ slug: activity.id.toString() }));
 };
+
+const ActivityShare = dynamic(
+	() => import('../../../../../components/activities/details/ActivityShare'),
+	{ ssr: false }
+);
 
 const ActivityDetailsPage: FunctionComponent<
 	ActivityDetailsPageProps
@@ -121,7 +129,7 @@ const ActivityDetailsPage: FunctionComponent<
 							<h3 className='mb-4 text-lg font-semibold text-gray-900'>
 								{t('ActivityDetailsPage.share')}
 							</h3>
-							<ActivityShare />
+							<ActivityShare locale={locale} slug={slug} />
 						</div>
 
 						{related_activities.length > 0 && (

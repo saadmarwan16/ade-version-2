@@ -1,61 +1,89 @@
 'use client';
 
+import { env } from '@/env';
+import { getPathname, Locale } from '@/i18n/routing';
+import copy from 'copy-to-clipboard';
 import { Linkedin, Facebook, Twitter, Mail, Link } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { FunctionComponent } from 'react';
+import toast from 'react-hot-toast';
+import {
+	EmailShareButton,
+	FacebookShareButton,
+	LinkedinShareButton,
+	TwitterShareButton,
+} from 'react-share';
 
 interface GalleryShareProps {
-	variant?: 'default' | 'hero';
+	locale: Locale;
+	slug: string;
 }
 
-export const GalleryShare: FunctionComponent<GalleryShareProps> = ({
-	variant = 'default',
+const GalleryShare: FunctionComponent<GalleryShareProps> = ({
+	locale,
+	slug,
 }) => {
 	const t = useTranslations();
-
-	const shareButtons = [
-		{ icon: Linkedin, label: 'LinkedIn', color: 'text-[#0077b5]' },
-		{ icon: Facebook, label: 'Facebook', color: 'text-[#1877f2]' },
-		{ icon: Twitter, label: 'Twitter', color: 'text-[#1da1f2]' },
-		{
-			icon: Mail,
-			label: t('ActivityDetailsPage.email'),
-			color: 'text-gray-600',
+	const pathname = getPathname({
+		locale: locale as 'en' | 'fr' | 'tr',
+		href: {
+			pathname: '/galleries/[slug]',
+			params: { slug: slug },
 		},
-		{
-			icon: Link,
-			label: t('ActivityDetailsPage.copy-link'),
-			color: 'text-indigo-600',
-		},
-	];
-
-	if (variant === 'hero') {
-		return (
-			<div className='flex items-center gap-4'>
-				{shareButtons.map(({ icon: Icon, label }) => (
-					<button
-						key={label}
-						className='rounded-full p-2 transition-colors hover:bg-white/20'
-						aria-label={`Share on ${label}`}
-					>
-						<Icon className='h-5 w-5 text-white' />
-					</button>
-				))}
-			</div>
-		);
-	}
+	});
+	const url = `${env.NEXT_PUBLIC_BASE_URL}/${locale}${pathname}`;
 
 	return (
-		<div className='flex flex-col gap-3'>
-			{shareButtons.map(({ icon: Icon, label, color }) => (
+		<div className='flex items-center gap-4'>
+			<LinkedinShareButton url={url}>
 				<button
-					key={label}
-					className='flex items-center gap-3 rounded-lg p-3 transition-colors hover:bg-gray-50'
+					key='LinkedIn'
+					className='rounded-full p-2 transition-colors hover:bg-white/20'
+					aria-label={`Share on LinkedIn`}
 				>
-					<Icon className={`h-5 w-5 ${color}`} />
-					<span className='text-gray-700'>{label}</span>
+					<Linkedin className='h-5 w-5 text-white' />
 				</button>
-			))}
+			</LinkedinShareButton>
+			<FacebookShareButton url={url}>
+				<button
+					key='Facebook'
+					className='rounded-full p-2 transition-colors hover:bg-white/20'
+					aria-label={`Share on Facebook`}
+				>
+					<Facebook className='h-5 w-5 text-white' />
+				</button>
+			</FacebookShareButton>
+			<TwitterShareButton url={url}>
+				<button
+					key='Twitter'
+					className='rounded-full p-2 transition-colors hover:bg-white/20'
+					aria-label={`Share on Twitter`}
+				>
+					<Twitter className='h-5 w-5 text-white' />
+				</button>
+			</TwitterShareButton>
+			<EmailShareButton url={url}>
+				<button
+					key='Email'
+					className='rounded-full p-2 transition-colors hover:bg-white/20'
+					aria-label={`Share on Email`}
+				>
+					<Mail className='h-5 w-5 text-white' />
+				</button>
+			</EmailShareButton>
+			<button
+				key='Link'
+				className='rounded-full p-2 transition-colors hover:bg-white/20'
+				aria-label={`Copy link`}
+				onClick={() => {
+					copy(url);
+					toast.success(t('Shared.copied-to-clipboard'));
+				}}
+			>
+				<Link className='h-5 w-5 text-white' />
+			</button>
 		</div>
 	);
 };
+
+export default GalleryShare;

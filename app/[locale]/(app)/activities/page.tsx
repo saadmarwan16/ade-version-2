@@ -1,3 +1,6 @@
+import 'dayjs/locale/fr';
+import 'dayjs/locale/tr';
+
 import { FunctionComponent } from 'react';
 import { Activity, Briefcase } from 'lucide-react';
 import { ActivityFilters } from '@/components/activities/ActivityFilters';

@@ -12,23 +12,27 @@
 	"dependencies": {
 		"@strapi/blocks-react-renderer": "^1.0.1",
 		"@t3-oss/env-nextjs": "^0.11.1",
+		"copy-to-clipboard": "^3.3.3",
 		"dayjs": "^1.11.13",
 		"framer-motion": "^11.0.5",
 		"lucide-react": "^0.344.0",
 		"next": "^14.1.0",
 		"next-intl": "3.23.5",
+		"next-safe-action": "^7.10.2",
 		"qs": "^6.12.3",
 		"react": "^18",
 		"react-dom": "^18",
+		"react-hot-toast": "^2.5.1",
 		"react-intersection-observer": "^9.8.1",
 		"react-loading-skeleton": "^3.4.0",
 		"react-medium-image-zoom": "^5.1.10",
+		"react-share": "^5.1.2",
 		"sharp": "^0.33.2",
 		"swiper": "^11.0.6",
 		"swr": "^2.3.0",
 		"zod": "^3.24.1",
 		"zod-fetch": "^0.1.1",
-		"zod-form-data": "^2.0.4"
+		"zod-form-data": "^2.0.5"
 	},
 	"devDependencies": {
 		"@tailwindcss/typography": "^0.5.10",
