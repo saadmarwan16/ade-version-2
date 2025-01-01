@@ -3,17 +3,41 @@ import { ContactInfo } from '@/components/contact/ContactInfo';
 import { SocialLinks } from '@/components/contact/SocialLinks';
 import { ContactSection } from '@/components/contact/ContactSection';
 import { FunctionComponent } from 'react';
-import { Locale } from '@/i18n/routing';
+import { getPathname, Locale } from '@/i18n/routing';
 import { fetchWithZod } from '@/lib/fetchWithZod';
 import { MetaSchema } from '@/lib/types/meta';
 import { env } from '@/env';
 import { metaQuery } from '@/lib/quiries/meta';
+import { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
+import { constructMetadata } from '@/lib/constructMetadata';
 
 interface ContactPageProps {
 	params: {
 		locale: Locale;
 	};
 }
+
+export const generateMetadata = async ({
+	params: { locale },
+}: ContactPageProps): Promise<Metadata> => {
+	const t = await getTranslations();
+	const keywords = t('ContactPage.title')
+		.split(' ')
+		.filter((word) => word !== '&')
+		.map((word) => word.toLowerCase());
+
+
+	return constructMetadata({
+		title: t('ContactPage.title'),
+		description: t('ContactPage.description'),
+		keywords: ['ademon', 'adebayo', 'amedee', ...keywords],
+		canonical: `${env.NEXT_PUBLIC_BASE_URL}/${locale}${getPathname({
+			href: '/contact',
+			locale: locale,
+		})}`,
+	});
+};
 
 const ContactPage: FunctionComponent<ContactPageProps> = async ({
 	params: { locale },

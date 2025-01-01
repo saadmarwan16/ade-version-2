@@ -19,7 +19,7 @@ export const RelatedActivities: FunctionComponent<RelatedActivitiesProps> = ({
 		<div className='space-y-4'>
 			{activities.map((activity) => (
 				<Link
-					key={activity.id}
+					key={activity.documentId}
 					href={{
 						pathname: '/activities/[slug]',
 						params: {

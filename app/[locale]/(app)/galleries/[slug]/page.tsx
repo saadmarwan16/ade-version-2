@@ -1,24 +1,58 @@
-import { galleries } from '@/components/galleries/data';
 import { GalleryMasonry } from '@/components/galleries/details/GalleryMasonry';
 import { env } from '@/env';
-import { Locale } from '@/i18n/routing';
+import { getPathname, Locale } from '@/i18n/routing';
 import { constructImageLink } from '@/lib/contructImageLink';
 import { fetchWithZod } from '@/lib/fetchWithZod';
+import { GalleriesSchema } from '@/lib/types/galleries';
+import { galleriesQuery } from '@/lib/quiries/galleries';
 import { galleryDetailsQuery } from '@/lib/quiries/gallery_details';
 import { GalleryDetailsSchema } from '@/lib/types/gallery_details';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { FunctionComponent } from 'react';
+import { Metadata } from 'next';
+import { constructMetadata } from '@/lib/constructMetadata';
 
 interface GalleryDetailsPageProps {
 	params: {
 		locale: Locale;
 		slug: string;
 	};
+	searchParams: {
+		index: string;
+	};
 }
 
-export const generateStaticParams = () => {
-	return galleries.map((gallery) => ({ slug: gallery.id.toString() }));
+export const generateMetadata = async ({
+	params: { locale, slug },
+}: GalleryDetailsPageProps): Promise<Metadata> => {
+	const { data: gallery } = await fetchWithZod(
+		GalleryDetailsSchema,
+		`${env.NEXT_PUBLIC_API_URL}/galleries/${slug}?${galleryDetailsQuery(locale)}`
+	);
+	const keywords = gallery.title.split(' ').map((word) => word.toLowerCase());
+
+	return constructMetadata({
+		title: gallery.title,
+		keywords: ['ademon', 'adebayo', 'amedee', ...keywords],
+		canonical: `${env.NEXT_PUBLIC_BASE_URL}/${locale}${getPathname({
+			href: '/galleries',
+			locale: locale,
+		})}/${slug}`,
+	});
+};
+
+export const generateStaticParams = async ({
+	params: { locale },
+}: GalleryDetailsPageProps) => {
+	const { data: galleries } = await fetchWithZod(
+		GalleriesSchema,
+		`${env.NEXT_PUBLIC_API_URL}/galleries?${galleriesQuery({
+			locale: locale,
+		})}`
+	);
+
+	return galleries.map((gallery) => ({ slug: gallery.slug, locale }));
 };
 
 const GalleryShare = dynamic(

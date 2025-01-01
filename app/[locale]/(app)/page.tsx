@@ -11,12 +11,32 @@ import { HomePageSchema } from '@/lib/types/home_page';
 import { homePageQuery } from '@/lib/quiries/home_page';
 import { env } from '@/env';
 import { Locale } from '@/i18n/routing';
+import { constructMetadata } from '@/lib/constructMetadata';
+import { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 
 interface HomePageProps {
 	params: {
 		locale: Locale;
 	};
 }
+
+export const generateMetadata = async ({
+	params: { locale },
+}: HomePageProps): Promise<Metadata> => {
+	const t = await getTranslations();
+	const keywords = t('HomePage.profession')
+		.split(' ')
+		.filter((word) => word !== '&')
+		.map((word) => word.toLowerCase());
+
+	return constructMetadata({
+		title: t('HomePage.profession'),
+		description: t('HomePage.description'),
+		keywords: ['ademon', 'adebayo', 'amedee', ...keywords],
+		canonical: `${env.NEXT_PUBLIC_BASE_URL}/${locale}`,
+	});
+};
 
 const HomePage: FunctionComponent<HomePageProps> = async ({
 	params: { locale },

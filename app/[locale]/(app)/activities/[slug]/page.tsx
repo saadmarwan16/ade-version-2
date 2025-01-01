@@ -3,7 +3,6 @@ import 'dayjs/locale/tr';
 
 import dynamic from 'next/dynamic';
 import { Calendar } from 'lucide-react';
-import { activities } from '@/components/activities/data';
 import { ActivityContent } from '@/components/activities/details/ActivityContent';
 import { RelatedActivities } from '@/components/activities/details/RelatedActivities';
 import { ImageCarousel } from '@/components/activities/carousel/ImageCarousel';
@@ -15,9 +14,13 @@ import { ActivityDetailsSchema } from '@/lib/types/activity_details';
 import { env } from '@/env';
 import { activityDetailsQuery } from '@/lib/quiries/activity_details';
 import { constructImageLink } from '@/lib/contructImageLink';
-import { Locale } from '@/i18n/routing';
+import { getPathname, Locale } from '@/i18n/routing';
 import dayjs from 'dayjs';
 import { typeColors } from '@/utils/constants/typeColors';
+import { ActivitiesSchema } from '@/lib/types/activities';
+import { activitiesQuery } from '@/lib/quiries/activities';
+import { Metadata } from 'next';
+import { constructMetadata } from '@/lib/constructMetadata';
 
 interface ActivityDetailsPageProps {
 	params: {
@@ -26,8 +29,39 @@ interface ActivityDetailsPageProps {
 	};
 }
 
-export const generateStaticParams = () => {
-	return activities.map((activity) => ({ slug: activity.id.toString() }));
+export const generateMetadata = async ({
+	params: { locale, slug },
+}: ActivityDetailsPageProps): Promise<Metadata> => {
+	const { data: activity } = await fetchWithZod(
+		ActivityDetailsSchema,
+		`${env.NEXT_PUBLIC_API_URL}/activities/${slug}?${activityDetailsQuery(locale)}`
+	);
+	const keywords = activity.title.split(' ').map((word) => word.toLowerCase());
+
+	return constructMetadata({
+		title: activity.title,
+		keywords: ['ademon', 'adebayo', 'amedee', ...keywords],
+		canonical: `${env.NEXT_PUBLIC_BASE_URL}/${locale}${getPathname({
+			href: '/activities',
+			locale: locale,
+		})}/${slug}`,
+	});
+};
+
+export const generateStaticParams = async ({
+	params: { locale },
+}: ActivityDetailsPageProps) => {
+	const { data: activities } = await fetchWithZod(
+		ActivitiesSchema,
+		`${env.NEXT_PUBLIC_API_URL}/activities?${activitiesQuery({
+			locale,
+		})}`
+	);
+
+	return activities.map((activity) => ({
+		slug: activity.slug,
+		locale: locale,
+	}));
 };
 
 const ActivityShare = dynamic(
@@ -65,6 +99,7 @@ const ActivityDetailsPage: FunctionComponent<
 						<div className='mb-4 hidden flex-wrap items-center gap-4 sm:flex'>
 							{activity.activity_categories.map((category) => (
 								<span
+									key={category.documentId}
 									className={`rounded-md px-4 py-1.5 text-sm font-medium ${
 										typeColors[category.color as keyof typeof typeColors]
 									}`}
@@ -93,6 +128,7 @@ const ActivityDetailsPage: FunctionComponent<
 						<div className='mb-6 flex flex-wrap items-center gap-4 sm:hidden'>
 							{activity.activity_categories.map((category) => (
 								<span
+									key={category.documentId}
 									className={`rounded-md px-4 py-1.5 text-sm font-medium ${
 										typeColors[category.color as keyof typeof typeColors]
 									}`}

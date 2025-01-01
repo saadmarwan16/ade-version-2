@@ -1,20 +1,41 @@
 import { AboutHero } from '@/components/about/AboutHero';
 import { AboutContent } from '@/components/about/AboutContent';
 import { getTranslations } from 'next-intl/server';
-import { Locale } from '@/i18n/routing';
+import { getPathname, Locale } from '@/i18n/routing';
 import { FunctionComponent } from 'react';
 import { fetchWithZod } from '@/lib/fetchWithZod';
 import { KnowMeSchema } from '@/lib/types/know_me';
 import { knowMePageQuery } from '@/lib/quiries/know_me_page';
 import { env } from '@/env';
+import { Metadata } from 'next';
+import { constructMetadata } from '@/lib/constructMetadata';
 
-interface HomePageProps {
+interface KnowMePageProps {
 	params: {
 		locale: Locale;
 	};
 }
 
-const KnowMePage: FunctionComponent<HomePageProps> = async ({
+export const generateMetadata = async ({
+	params: { locale },
+}: KnowMePageProps): Promise<Metadata> => {
+	const t = await getTranslations();
+	const keywords = t('KnowMePage.title')
+		.split(' ')
+		.map((word) => word.toLowerCase());
+
+	return constructMetadata({
+		title: t('KnowMePage.title'),
+		description: t('KnowMePage.description'),
+		keywords: ['ademon', 'adebayo', 'amedee', ...keywords],
+		canonical: `${env.NEXT_PUBLIC_BASE_URL}/${locale}${getPathname({
+			href: '/know-me',
+			locale: locale,
+		})}`,
+	});
+};
+
+const KnowMePage: FunctionComponent<KnowMePageProps> = async ({
 	params: { locale },
 }) => {
 	const t = await getTranslations();

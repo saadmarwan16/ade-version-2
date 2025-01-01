@@ -13,7 +13,7 @@ export const ContactSection: FunctionComponent = () => {
 	const t = useTranslations();
 
 	useEffect(() => {
-		console.log('Result:', result)
+		console.log('Result:', result);
 		const { data, serverError } = result;
 		if (serverError) toast.error(serverError);
 		else if (data === 'Message sent successfully') {
@@ -40,37 +40,73 @@ export const ContactSection: FunctionComponent = () => {
 				<div className='mx-auto max-w-3xl'>
 					<form ref={ref} action={execute} className='space-y-6'>
 						<div className='grid grid-cols-1 gap-6 sm:grid-cols-2'>
-							<input
-								type='text'
-								name='name'
-								placeholder={t('ContactPage.name')}
-								className='w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-500'
-								required
-							/>
-							<input
-								type='email'
-								name='email'
-								placeholder={t('ContactPage.email')}
-								className='w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-500'
-								required
-							/>
+							<div className='flex flex-col gap-2'>
+								<input
+									type='text'
+									name='name'
+									placeholder={t('ContactPage.name')}
+									className='w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-500'
+								/>
+								{result.validationErrors?.name?._errors?.map((error: any, idx) => (
+									<p
+										key={idx}
+										className='cursor-default select-none text-sm text-red-500'
+									>
+										{t(error)}
+									</p>
+								))}
+							</div>
+							<div className='flex flex-col gap-2'>
+								<input
+									type='text'
+									name='email'
+									placeholder={t('ContactPage.email')}
+									className='w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-500'
+								/>
+								{result.validationErrors?.email?._errors?.map((error: any, idx) => (
+									<p
+										key={idx}
+										className='cursor-default select-none text-sm text-red-500'
+									>
+										{t(error)}
+									</p>
+								))}
+							</div>
 						</div>
 
-						<input
-							type='text'
-							name='subject'
-							placeholder={t('ContactPage.subject')}
-							className='w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-500'
-							required
-						/>
+						<div className='flex flex-col gap-2'>
+							<input
+								type='text'
+								name='subject'
+								placeholder={t('ContactPage.subject')}
+								className='w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-500'
+							/>
+							{result.validationErrors?.subject?._errors?.map((error: any, idx) => (
+								<p
+									key={idx}
+									className='cursor-default select-none text-sm text-red-500'
+								>
+									{t(error)}
+								</p>
+							))}
+						</div>
 
-						<textarea
-							name='content'
-							placeholder={t('ContactPage.message')}
-							rows={6}
-							className='w-full resize-none rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-500'
-							required
-						/>
+						<div className='flex flex-col gap-2'>
+							<textarea
+								name='content'
+								placeholder={t('ContactPage.message')}
+								rows={6}
+								className='w-full resize-none rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-indigo-500'
+							/>
+							{result.validationErrors?.content?._errors?.map((error: any, idx) => (
+								<p
+									key={idx}
+									className='cursor-default select-none text-sm text-red-500'
+								>
+									{t(error)}
+								</p>
+							))}
+						</div>
 
 						<div className='text-center'>
 							<button

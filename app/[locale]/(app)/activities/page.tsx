@@ -6,12 +6,16 @@ import { Activity, Briefcase } from 'lucide-react';
 import { ActivityFilters } from '@/components/activities/ActivityFilters';
 import { ActivityGrid } from '@/components/activities/ActivityGrid';
 import { ActivitySort } from '@/components/activities/ActivitySort';
-import { Locale } from '@/i18n/routing';
+import { getPathname, Locale } from '@/i18n/routing';
 import { ActivitySearch } from '@/components/activities/ActivitySearch';
 import { getTranslations } from 'next-intl/server';
 import { fetchWithZod } from '@/lib/fetchWithZod';
 import { ActivityCategorySchema } from '@/lib/types/activity_category';
 import { env } from '@/env';
+import { Metadata } from 'next';
+import { constructMetadata } from '@/lib/constructMetadata';
+import { MetaSchema } from '@/lib/types/meta';
+import { metaQuery } from '@/lib/quiries/meta';
 
 interface ActivitiesPageProps {
 	params: {
@@ -24,15 +28,40 @@ interface ActivitiesPageProps {
 	};
 }
 
+export const generateMetadata = async ({
+	params: { locale },
+}: ActivitiesPageProps): Promise<Metadata> => {
+	const t = await getTranslations();
+	const keywords = t('ActivitiesPage.title')
+		.split(' ')
+		.map((word) => word.toLowerCase());
+
+	return constructMetadata({
+		title: t('ActivitiesPage.title'),
+		description: t('ActivitiesPage.description'),
+		keywords: ['ademon', 'adebayo', 'amedee', ...keywords],
+		canonical: `${env.NEXT_PUBLIC_BASE_URL}/${locale}${getPathname({
+			href: '/activities',
+			locale: locale,
+		})}`,
+	});
+};
+
 const ActivitiesPage: FunctionComponent<ActivitiesPageProps> = async ({
 	params: { locale },
 	searchParams,
 }) => {
 	const t = await getTranslations();
-	const { data } = await fetchWithZod(
-		ActivityCategorySchema,
-		`${env.NEXT_PUBLIC_API_URL}/activity-categories?locale=${locale}`
-	);
+	const [categories, meta] = await Promise.all([
+		fetchWithZod(
+			ActivityCategorySchema,
+			`${env.NEXT_PUBLIC_API_URL}/activity-categories?locale=${locale}`
+		),
+		fetchWithZod(
+			MetaSchema,
+			`${env.NEXT_PUBLIC_API_URL}/meta?${metaQuery(locale)}`
+		),
+	]);
 
 	return (
 		<div className='min-h-screen'>
@@ -57,14 +86,14 @@ const ActivitiesPage: FunctionComponent<ActivitiesPageProps> = async ({
 					<div className='mt-12 flex justify-center gap-8'>
 						<div className='w-full max-w-xs rounded-xl bg-white/10 p-8 text-center backdrop-blur-sm'>
 							<Activity className='mx-auto mb-4 h-10 w-10 text-indigo-200' />
-							<div className='mb-2 text-3xl font-bold text-white'>150+</div>
+							<div className='mb-2 text-3xl font-bold text-white'>{meta.data.number_of_activities}+</div>
 							<div className='text-lg text-indigo-200'>
 								{t('ActivitiesPage.activities')}
 							</div>
 						</div>
 						<div className='w-full max-w-xs rounded-xl bg-white/10 p-8 text-center backdrop-blur-sm'>
 							<Briefcase className='mx-auto mb-4 h-10 w-10 text-indigo-200' />
-							<div className='mb-2 text-3xl font-bold text-white'>25+</div>
+							<div className='mb-2 text-3xl font-bold text-white'>{meta.data.number_of_projects}+</div>
 							<div className='text-lg text-indigo-200'>
 								{t('ActivitiesPage.projects')}
 							</div>
@@ -84,7 +113,7 @@ const ActivitiesPage: FunctionComponent<ActivitiesPageProps> = async ({
 
 					<ActivityFilters
 						searchParams={searchParams}
-						filters={data.map((filter) => filter.title)}
+						filters={categories.data.map((filter) => filter.title)}
 					/>
 					<ActivityGrid
 						locale={locale}

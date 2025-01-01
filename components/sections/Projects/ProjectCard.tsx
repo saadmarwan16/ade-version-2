@@ -37,9 +37,10 @@ export const ProjectCard: FunctionComponent<ProjectCardProps> = ({
 				</div>
 
 				<div className='flex h-[calc(100%-aspect-video)] flex-col p-6'>
-					<div className='mb-4 flex gap-2 items-center'>
+					<div className='mb-4 flex items-center gap-2'>
 						{project.project_types.map((type) => (
 							<span
+								key={type.documentId}
 								className={`inline-block rounded-md px-3 py-1 text-sm font-medium ${
 									typeColors[type.color as keyof typeof typeColors]
 								}`}

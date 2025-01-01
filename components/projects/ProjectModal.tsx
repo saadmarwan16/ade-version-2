@@ -30,6 +30,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
 						<div className='mb-4 flex items-center gap-3'>
 							{project.project_types.map((project_type) => (
 								<span
+									key={project_type.documentId}
 									className={`rounded-md px-3 py-1 text-sm font-medium ${
 										typeColors[project_type.color as keyof typeof typeColors]
 									}`}

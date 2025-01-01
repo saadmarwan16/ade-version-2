@@ -3,8 +3,11 @@ import { GalleryHero } from '@/components/galleries/GalleryHero';
 import { GalleryGrid } from '@/components/galleries/GalleryGrid';
 import { GallerySort } from '@/components/galleries/GallerySort';
 import { GallerySearch } from '@/components/galleries/GallerySearch';
-import { Locale } from '@/i18n/routing';
+import { getPathname, Locale } from '@/i18n/routing';
 import { getTranslations } from 'next-intl/server';
+import { Metadata } from 'next';
+import { constructMetadata } from '@/lib/constructMetadata';
+import { env } from '@/env';
 
 interface GalleryPageProps {
 	params: {
@@ -15,6 +18,28 @@ interface GalleryPageProps {
 		sort?: string;
 	};
 }
+
+export const generateMetadata = async ({
+	params: { locale },
+}: GalleryPageProps): Promise<Metadata> => {
+	const t = await getTranslations();
+	const title =
+		t('GalleriesPage.title-prefix') + ' ' + t('GalleriesPage.title-suffix');
+	const keywords = title
+		.split(' ')
+		.filter((word) => word !== '&')
+		.map((word) => word.toLowerCase());
+
+	return constructMetadata({
+		title: title,
+		description: t('HomePage.description'),
+		keywords: ['ademon', 'adebayo', 'amedee', ...keywords],
+		canonical: `${env.NEXT_PUBLIC_BASE_URL}/${locale}${getPathname({
+			href: '/galleries',
+			locale: locale,
+		})}`,
+	});
+};
 
 const GalleriesPage: FunctionComponent<GalleryPageProps> = async ({
 	params: { locale },

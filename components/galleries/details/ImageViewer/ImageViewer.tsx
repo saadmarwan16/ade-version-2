@@ -36,6 +36,7 @@ export function ImageViewer({
 	const swiperRef = useRef<any>(null);
 
 	const handleSlideChange = useCallback((swiper: any) => {
+		console.log('Swiper:', swiper.realIndex);
 		setCurrentIndex(swiper.realIndex);
 	}, []);
 
@@ -69,7 +70,6 @@ export function ImageViewer({
 						slidesPerView={1}
 						initialSlide={initialIndex}
 						loop={true}
-						virtual
 						navigation={{
 							prevEl: '.swiper-button-prev',
 							nextEl: '.swiper-button-next',
@@ -84,16 +84,15 @@ export function ImageViewer({
 						{images.map((image, index) => (
 							<SwiperSlide
 								key={index}
-								virtualIndex={index}
 								className='flex items-center justify-center p-4 sm:p-8'
 							>
 								<div className='relative flex h-full w-full items-center justify-center'>
 									<Zoom>
 										<Image
 											src={constructImageLink(image.url)}
+											alt={`Gallery image ${index + 1}`}
 											width={image.width}
 											height={image.height}
-											alt={`Gallery image ${index + 1}`}
 											className='h-auto max-h-[calc(100vh-180px)] w-auto max-w-full object-contain'
 											loading={
 												Math.abs(index - currentIndex) <= 2 ? 'eager' : 'lazy'
