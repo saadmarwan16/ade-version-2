@@ -37,7 +37,7 @@ export const ActivitySearch: FunctionComponent<ActivitySearchProps> = ({
 				scroll: false,
 			}
 		);
-	}, [debouncedValue]);
+	}, [debouncedValue, router, searchParams.category, searchParams.sort]);
 
 	return (
 		<div className='relative flex-grow'>

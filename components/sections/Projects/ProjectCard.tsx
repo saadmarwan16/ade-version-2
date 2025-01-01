@@ -37,7 +37,7 @@ export const ProjectCard: FunctionComponent<ProjectCardProps> = ({
 				</div>
 
 				<div className='flex h-[calc(100%-aspect-video)] flex-col p-6'>
-					<div className='mb-4 flex items-center gap-2'>
+					<div className='mb-4 flex items-center gap-2 flex-wrap'>
 						{project.project_types.map((type) => (
 							<span
 								key={type.documentId}

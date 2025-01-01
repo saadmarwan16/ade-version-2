@@ -1,6 +1,3 @@
-import 'dayjs/locale/fr';
-import 'dayjs/locale/tr';
-
 import { FunctionComponent } from 'react';
 import { Activity, Briefcase } from 'lucide-react';
 import { ActivityFilters } from '@/components/activities/ActivityFilters';
@@ -8,7 +5,7 @@ import { ActivityGrid } from '@/components/activities/ActivityGrid';
 import { ActivitySort } from '@/components/activities/ActivitySort';
 import { getPathname, Locale } from '@/i18n/routing';
 import { ActivitySearch } from '@/components/activities/ActivitySearch';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { fetchWithZod } from '@/lib/fetchWithZod';
 import { ActivityCategorySchema } from '@/lib/types/activity_category';
 import { env } from '@/env';
@@ -51,6 +48,7 @@ const ActivitiesPage: FunctionComponent<ActivitiesPageProps> = async ({
 	params: { locale },
 	searchParams,
 }) => {
+	setRequestLocale(locale);
 	const t = await getTranslations();
 	const [categories, meta] = await Promise.all([
 		fetchWithZod(
@@ -126,5 +124,7 @@ const ActivitiesPage: FunctionComponent<ActivitiesPageProps> = async ({
 		</div>
 	);
 };
+
+export const revalidate = 60;
 
 export default ActivitiesPage;

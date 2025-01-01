@@ -1,5 +1,9 @@
 'use client';
 
+import 'dayjs/locale/fr';
+import 'dayjs/locale/tr';
+
+
 import { FunctionComponent } from 'react';
 import Image from 'next/image';
 import { Calendar, ArrowRight } from 'lucide-react';
@@ -97,7 +101,7 @@ export const ActivityGrid: FunctionComponent<ActivityGridProps> = ({
 										</div>
 
 										<div className='flex flex-grow flex-col p-6'>
-											<div className='mb-4 flex items-center gap-3'>
+											<div className='mb-4 flex items-center gap-3 flex-wrap'>
 												{activity.activity_categories.map((category) => (
 													<span
 														key={category.documentId}

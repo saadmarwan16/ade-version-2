@@ -46,7 +46,7 @@ export const GallerySearch: FunctionComponent<GallerySearchProps> = ({
 				}
 			);
 		}
-	}, [debouncedValue]);
+	}, [debouncedValue, router, searchParams]);
 
 	return (
 		<div className='relative flex-grow'>

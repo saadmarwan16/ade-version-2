@@ -4,7 +4,7 @@ import { GalleryGrid } from '@/components/galleries/GalleryGrid';
 import { GallerySort } from '@/components/galleries/GallerySort';
 import { GallerySearch } from '@/components/galleries/GallerySearch';
 import { getPathname, Locale } from '@/i18n/routing';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Metadata } from 'next';
 import { constructMetadata } from '@/lib/constructMetadata';
 import { env } from '@/env';
@@ -45,6 +45,7 @@ const GalleriesPage: FunctionComponent<GalleryPageProps> = async ({
 	params: { locale },
 	searchParams,
 }) => {
+	setRequestLocale(locale);
 	const t = await getTranslations();
 
 	return (
@@ -71,5 +72,7 @@ const GalleriesPage: FunctionComponent<GalleryPageProps> = async ({
 		</div>
 	);
 };
+
+export const revalidate = 60;
 
 export default GalleriesPage;

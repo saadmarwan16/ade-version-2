@@ -41,7 +41,7 @@ export const ActivityCard: FunctionComponent<ActivityCardProps> = ({
 					/>
 				</div>
 				<div className='flex flex-grow flex-col p-6'>
-					<div className='mb-4 flex items-center gap-3'>
+					<div className='mb-4 flex items-center gap-3 flex-wrap'>
 						{activity.activity_categories.map((category) => (
 							<span
 								key={category.documentId}

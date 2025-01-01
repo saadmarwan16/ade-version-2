@@ -8,7 +8,7 @@ import { RelatedActivities } from '@/components/activities/details/RelatedActivi
 import { ImageCarousel } from '@/components/activities/carousel/ImageCarousel';
 import Image from 'next/image';
 import { FunctionComponent } from 'react';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { fetchWithZod } from '@/lib/fetchWithZod';
 import { ActivityDetailsSchema } from '@/lib/types/activity_details';
 import { env } from '@/env';
@@ -72,6 +72,7 @@ const ActivityShare = dynamic(
 const ActivityDetailsPage: FunctionComponent<
 	ActivityDetailsPageProps
 > = async ({ params: { locale, slug } }) => {
+	setRequestLocale(locale);
 	const t = await getTranslations();
 	const { data: activity } = await fetchWithZod(
 		ActivityDetailsSchema,
@@ -185,5 +186,8 @@ const ActivityDetailsPage: FunctionComponent<
 		</div>
 	);
 };
+
+export const revalidate = 60;
+export const dynamicParams = true;
 
 export default ActivityDetailsPage;

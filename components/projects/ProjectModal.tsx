@@ -27,7 +27,7 @@ export function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
 				{/* Content */}
 				<div className='space-y-6'>
 					<div>
-						<div className='mb-4 flex items-center gap-3'>
+						<div className='mb-4 flex items-center gap-3 flex-wrap'>
 							{project.project_types.map((project_type) => (
 								<span
 									key={project_type.documentId}

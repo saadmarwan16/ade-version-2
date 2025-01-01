@@ -12,15 +12,13 @@ import Image from 'next/image';
 import { FunctionComponent } from 'react';
 import { Metadata } from 'next';
 import { constructMetadata } from '@/lib/constructMetadata';
+import { setRequestLocale } from 'next-intl/server';
 
 interface GalleryDetailsPageProps {
 	params: {
 		locale: Locale;
 		slug: string;
-	};
-	searchParams: {
-		index: string;
-	};
+	}
 }
 
 export const generateMetadata = async ({
@@ -45,6 +43,7 @@ export const generateMetadata = async ({
 export const generateStaticParams = async ({
 	params: { locale },
 }: GalleryDetailsPageProps) => {
+	setRequestLocale(locale);
 	const { data: galleries } = await fetchWithZod(
 		GalleriesSchema,
 		`${env.NEXT_PUBLIC_API_URL}/galleries?${galleriesQuery({
@@ -104,5 +103,8 @@ const GalleryDetailsPage: FunctionComponent<GalleryDetailsPageProps> = async ({
 		</div>
 	);
 };
+
+export const revalidate = 60;
+export const dynamicParams = true;
 
 export default GalleryDetailsPage;

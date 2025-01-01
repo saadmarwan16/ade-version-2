@@ -1,6 +1,6 @@
 import { AboutHero } from '@/components/about/AboutHero';
 import { AboutContent } from '@/components/about/AboutContent';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { getPathname, Locale } from '@/i18n/routing';
 import { FunctionComponent } from 'react';
 import { fetchWithZod } from '@/lib/fetchWithZod';
@@ -38,6 +38,7 @@ export const generateMetadata = async ({
 const KnowMePage: FunctionComponent<KnowMePageProps> = async ({
 	params: { locale },
 }) => {
+	setRequestLocale(locale);
 	const t = await getTranslations();
 	const { data } = await fetchWithZod(
 		KnowMeSchema,
@@ -56,5 +57,7 @@ const KnowMePage: FunctionComponent<KnowMePageProps> = async ({
 		</main>
 	);
 };
+
+export const revalidate = 60;
 
 export default KnowMePage;

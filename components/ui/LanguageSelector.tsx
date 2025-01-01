@@ -24,7 +24,7 @@ export const LanguageSelector: FunctionComponent<LanguageSelectorProps> = ({
 	locale,
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const selectedLang = useMemo(() => languages[locale], [languages, locale]);
+	const selectedLang = useMemo(() => languages[locale], [locale]);
 	const dropdownRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {

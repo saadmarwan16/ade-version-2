@@ -13,7 +13,7 @@ import { env } from '@/env';
 import { Locale } from '@/i18n/routing';
 import { constructMetadata } from '@/lib/constructMetadata';
 import { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 interface HomePageProps {
 	params: {
@@ -41,6 +41,7 @@ export const generateMetadata = async ({
 const HomePage: FunctionComponent<HomePageProps> = async ({
 	params: { locale },
 }) => {
+	setRequestLocale(locale);
 	const { data } = await fetchWithZod(
 		HomePageSchema,
 		`${env.NEXT_PUBLIC_API_URL}/home-page?${homePageQuery(locale)}`
@@ -57,5 +58,7 @@ const HomePage: FunctionComponent<HomePageProps> = async ({
 		</main>
 	);
 };
+
+export const revalidate = 60;
 
 export default HomePage;

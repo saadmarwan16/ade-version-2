@@ -9,7 +9,7 @@ import { MetaSchema } from '@/lib/types/meta';
 import { env } from '@/env';
 import { metaQuery } from '@/lib/quiries/meta';
 import { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { constructMetadata } from '@/lib/constructMetadata';
 
 interface ContactPageProps {
@@ -42,6 +42,7 @@ export const generateMetadata = async ({
 const ContactPage: FunctionComponent<ContactPageProps> = async ({
 	params: { locale },
 }) => {
+	setRequestLocale(locale);
 	const { data } = await fetchWithZod(
 		MetaSchema,
 		`${env.NEXT_PUBLIC_API_URL}/meta?${metaQuery(locale)}`
@@ -70,5 +71,7 @@ const ContactPage: FunctionComponent<ContactPageProps> = async ({
 		</main>
 	);
 };
+
+export const revalidate = 60;
 
 export default ContactPage;
