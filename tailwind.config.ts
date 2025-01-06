@@ -5,6 +5,15 @@ const config: Config = {
 		'./src/**/*.{js,ts,jsx,tsx,mdx}',
 		'./app/**/*.{js,ts,jsx,tsx,mdx}',
 		'./components/**/*.{js,ts,jsx,tsx,mdx}',
+		'./utils/constants/socialLinks.ts',
+	],
+	safelist: [
+		'hover:bg-[#0077b5]',
+		'hover:border-[#0077b5]',
+		'hover:bg-[#1DA1F2]',
+		'hover:border-[#1DA1F2]',
+		'hover:bg-[#E4405F]',
+		'hover:border-[#E4405F]',
 	],
 	theme: {
 		extend: {

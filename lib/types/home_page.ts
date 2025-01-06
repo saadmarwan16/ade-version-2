@@ -12,7 +12,7 @@ export const ProjectSchema = z.object({
 	id: z.number(),
 	title: z.string(),
 	description: z.string(),
-	link: z.string(),
+	link: z.string().nullable(),
 	project_types: z.array(ActivityCategorySchema),
 	image: ImageSchema,
 });
