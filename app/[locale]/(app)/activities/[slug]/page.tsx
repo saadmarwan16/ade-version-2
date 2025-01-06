@@ -45,6 +45,7 @@ export const generateMetadata = async ({
 			href: '/activities',
 			locale: locale,
 		})}/${slug}`,
+		images: constructImageLink(activity.thumbnail.url),
 	});
 };
 

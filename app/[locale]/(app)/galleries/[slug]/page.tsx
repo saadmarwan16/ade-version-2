@@ -37,6 +37,7 @@ export const generateMetadata = async ({
 			href: '/galleries',
 			locale: locale,
 		})}/${slug}`,
+		images: constructImageLink(gallery.thumbnail.url),
 	});
 };
 
