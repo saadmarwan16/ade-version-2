@@ -36,7 +36,6 @@ export function ImageViewer({
 	const swiperRef = useRef<any>(null);
 
 	const handleSlideChange = useCallback((swiper: any) => {
-		console.log('Swiper:', swiper.realIndex);
 		setCurrentIndex(swiper.realIndex);
 	}, []);
 

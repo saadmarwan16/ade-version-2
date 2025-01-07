@@ -13,7 +13,6 @@ export const ContactSection: FunctionComponent = () => {
 	const t = useTranslations();
 
 	useEffect(() => {
-		console.log('Result:', result);
 		const { data, serverError } = result;
 		if (serverError) toast.error(serverError);
 		else if (data === 'Message sent successfully') {

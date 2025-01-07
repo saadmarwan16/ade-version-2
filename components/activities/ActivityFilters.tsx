@@ -2,6 +2,7 @@
 
 import { useRouter } from '@/i18n/routing';
 import { constructNewActivityQuery } from '@/utils/constructNewActivityQuery';
+import { useTranslations } from 'next-intl';
 import { FunctionComponent } from 'react';
 
 interface ActivityFiltersProps {
@@ -18,6 +19,7 @@ export const ActivityFilters: FunctionComponent<ActivityFiltersProps> = ({
 	searchParams,
 }) => {
 	const router = useRouter();
+	const t = useTranslations();
 
 	return (
 		<div className='mb-8 flex flex-wrap gap-3'>
@@ -44,7 +46,7 @@ export const ActivityFilters: FunctionComponent<ActivityFiltersProps> = ({
 						: 'border border-gray-200 bg-white text-gray-600 hover:bg-gray-50'
 				}`}
 			>
-				All
+				{t('ActivitiesPage.all-tab')}
 			</button>
 			{filters.map((filter) => (
 				<button
