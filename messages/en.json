@@ -13,11 +13,11 @@
 	"HomePage": {
 		"name": "I am",
 		"profession": "Biomedical Engineer & International Relations Expert",
-		"description": "Bridging the gap between healthcare innovation and global collaboration",
+		"description": "Bridging the Gap Between Innovation and Global Collaboration",
 		"learn-more-button": "Learn more",
 		"view-projects-button": "View projects",
 		"featured-projects-title": "Featured Projects",
-		"featured-projects-description": "Innovative healthcare solutions driving impact across Africa",
+		"featured-projects-description": "Innovative solutions driving impact across Africa",
 		"trusted-partners-title": "Trusted Partners",
 		"trusted-partners-description": "Collaborating with leading organizations to drive innovation",
 		"recent-activities-title": "Recent Activities",
@@ -26,7 +26,7 @@
 	},
 	"ActivitiesPage": {
 		"title": "Journey Through Impact",
-		"description": "Explore my path of innovation in healthcare, international relations, and community development. Each activity represents a step towards positive change in Africa and beyond.",
+		"description": "Explore my path of innovation, international relations, and community development. Each activity represents a step towards positive change in Africa and beyond.",
 		"activities": "Activities",
 		"projects": "Projects",
 		"search-placeholder": "Search activities...",
@@ -46,7 +46,7 @@
 	"GalleriesPage": {
 		"title-prefix": "WELCOME TO",
 		"title-suffix": "MY VISUAL DIARY",
-		"description": "A collection of moments, memories, and milestones in my journey through healthcare innovation and international relations",
+		"description": "A collection of moments, memories, and milestones in my journey through innovation and international relations",
 		"search-placeholder": "Search galleries...",
 		"sort-by-button": "Sort by",
 		"latest-first-option": "Latest first",
@@ -57,7 +57,7 @@
 	},
 	"KnowMePage": {
 		"title": "Know Me Better",
-		"description": "Biomedical Engineer & International Relations Expert bridging healthcare innovation with global collaboration"
+		"description": "Biomedical Engineer & International Relations Expert Bridging Innovation with Global Collaboration"
 	},
 	"ContactPage": {
 		"title": "Let's Connect",

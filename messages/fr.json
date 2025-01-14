@@ -12,12 +12,12 @@
 	},
 	"HomePage": {
 		"name": "Je suis",
-		"profession": "Ingénieur biomédical et expert en relations internationales",
-		"description": "Combler le fossé entre l'innovation en santé et la collaboration mondiale",
+		"profession": "Ingénieur Biomédical et Expert en Relations Internationales",
+		"description": "Combler le fossé entre l'Innovation et la collaboration mondiale",
 		"learn-more-button": "En savoir plus",
-		"view-projects-button": "Voir les projets",
-		"featured-projects-title": "Projets phares",
-		"featured-projects-description": "Solutions de santé innovantes ayant un impact en Afrique",
+		"view-projects-button": "Voir mes projets",
+		"featured-projects-title": "Projets Phares",
+		"featured-projects-description": "Solutions de innovantes ayant un impact en Afrique",
 		"trusted-partners-title": "Partenaires de confiance",
 		"trusted-partners-description": "Collaborer avec des organisations de premier plan pour promouvoir l'innovation",
 		"recent-activities-title": "Activités récentes",
@@ -26,7 +26,7 @@
 	},
 	"ActivitiesPage": {
 		"title": "Parcours d'impact",
-		"description": "Explorez mon cheminement dans l'innovation en santé, les relations internationales et le développement communautaire. Chaque activité représente une étape vers un changement positif en Afrique et au-delà.",
+		"description": "Explorez mon cheminement dans l'Innovation, les Relations Internationales et le Développement Communautaire. Chaque activité représente une étape vers un changement positif en Afrique et au-delà.",
 		"activities": "Activités",
 		"projects": "Projets",
 		"search-placeholder": "Rechercher des activités...",
@@ -50,7 +50,7 @@
 	"GalleriesPage": {
 		"title-prefix": "BIENVENUE DANS",
 		"title-suffix": "MON JOURNAL VISUEL",
-		"description": "Une collection de moments, souvenirs et étapes de mon parcours dans l'innovation en santé et les relations internationales",
+		"description": "Une collection de moments, souvenirs et étapes de mon parcours dans l'innovation et les relations internationales",
 		"search-placeholder": "Rechercher des galeries...",
 		"sort-by-button": "Trier par",
 		"latest-first-option": "Les plus récentes",
@@ -60,8 +60,8 @@
 		"see-more-button": "Voir plus"
 	},
 	"KnowMePage": {
-		"title": "Apprenez à me connaître",
-		"description": "Ingénieur biomédical et expert en relations internationales reliant l'innovation en santé à la collaboration mondiale"
+		"title": "Mieux me connaître",
+		"description": "Ingénieur Biomédical et Expert en Relations Internationales reliant l'Innovation à la Collaboration mondiale"
 	},
 	"ContactPage": {
 		"title": "Entrons en contact",

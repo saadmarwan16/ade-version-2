@@ -13,11 +13,11 @@
 	"HomePage": {
 		"name": "Adım",
 		"profession": "Biyomedikal Mühendisi ve Uluslararası İlişkiler Uzmanı",
-		"description": "Sağlık inovasyonu ve küresel iş birliği arasındaki boşluğu dolduruyor",
+		"description": "İnovasyonları ve Küresel İş Birliği arasındaki boşluğu dolduruyorum",
 		"learn-more-button": "Daha fazlasını öğrenin",
 		"view-projects-button": "Projeleri görüntüleyin",
 		"featured-projects-title": "Öne Çıkan Projeler",
-		"featured-projects-description": "Afrika genelinde etki yaratan yenilikçi sağlık çözümleri",
+		"featured-projects-description": "Afrika genelinde etki yaratan yenilikçi çözümleri",
 		"trusted-partners-title": "Güvenilir Ortaklar",
 		"trusted-partners-description": "Yeniliği yönlendirmek için önde gelen kuruluşlarla iş birliği yapıyor",
 		"recent-activities-title": "Son Etkinlikler",
@@ -26,7 +26,7 @@
 	},
 	"ActivitiesPage": {
 		"title": "Etkili Yolculuk",
-		"description": "Sağlıkta inovasyon, uluslararası ilişkiler ve toplumsal gelişim yolculuğumu keşfedin. Her etkinlik, Afrika ve ötesinde olumlu değişime doğru bir adımdır.",
+		"description": "İnovasyon, Uluslararası İlişkiler ve Toplumsal gelişim yolculuğumu keşfedin. Her etkinlik, Afrika ve ötesinde olumlu değişime doğru bir adımdır.",
 		"activities": "Etkinlikler",
 		"projects": "Projeler",
 		"search-placeholder": "Etkinlikleri ara...",
@@ -50,7 +50,7 @@
 	"GalleriesPage": {
 		"title-prefix": "GÖRSEL GÜNLÜĞÜME",
 		"title-suffix": "HOŞGELDİNİZ",
-		"description": "Sağlık inovasyonu ve uluslararası ilişkiler yolculuğumdaki anlar, anılar ve kilometre taşlarının bir koleksiyonu",
+		"description": "İnovasyonu ve Uluslararası İlişkiler yolculuğumdaki anlar, anılar ve kilometre taşlarının bir koleksiyonu",
 		"search-placeholder": "Galerileri ara...",
 		"sort-by-button": "Sırala",
 		"latest-first-option": "En yeni önce",
@@ -61,7 +61,7 @@
 	},
 	"KnowMePage": {
 		"title": "Beni Daha İyi Tanıyın",
-		"description": "Sağlık inovasyonunu küresel iş birliğiyle birleştiren Biyomedikal Mühendisi ve Uluslararası İlişkiler Uzmanı"
+		"description": "İnovasyonunu Küresel İş Birliğiyle birleştiren Biyomedikal Mühendisi ve Uluslararası İlişkiler Uzmanı"
 	},
 	"ContactPage": {
 		"title": "İletişime geçelim",
